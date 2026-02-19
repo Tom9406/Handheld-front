@@ -3,70 +3,38 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.PickingPage"
-    Shell.NavBarIsVisible="False">
+    Title="Picking"
+    Shell.BackgroundColor="{StaticResource BrandBlue}"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White">
 
-    <Grid RowDefinitions="Auto,Auto,*">
 
-        <!-- ===================== -->
-        <!-- TOP BAR -->
-        <!-- ===================== -->
-        <Grid
-            Grid.Row="0"
-            BackgroundColor="{StaticResource BrandBlue}"
-            HeightRequest="64"
-            Padding="12"
-            ColumnDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*"
+      BackgroundColor="White">
 
-            <Label
-                Text="☰"
-                FontSize="22"
-                TextColor="White"
-                VerticalOptions="Center"/>
 
-            <Label
-                Grid.Column="1"
-                Text="Picking"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="22"
-                FontAttributes="Bold"
-                TextColor="White"/>
-        </Grid>
 
         <!-- ===================== -->
         <!-- FILTER BAR -->
         <!-- ===================== -->
-        <VerticalStackLayout
-            Grid.Row="1"
-            Padding="12,8"
-            BackgroundColor="White">
+        <Entry
+            x:Name="SearchEntry"
+            Text="{Binding SearchText}"
+            Placeholder="Buscar ..."
+            ReturnType="Search"
+            Completed="OnSearchCompleted"
+            IsTextPredictionEnabled="False"
+            Margin="2"
+            BackgroundColor="White" 
+            PlaceholderColor="Black"
+            TextColor="Black" />
 
-            <Entry
-                x:Name="SearchEntry"
-                Placeholder="Scan or type"
-                FontSize="18"
-                HeightRequest="48"
-                ReturnType="Done"
-                Completed="OnSearchCompleted"
-                IsTextPredictionEnabled="False"
-                TextColor="Black" />
-
-            <BoxView
-                HeightRequest="1"
-                BackgroundColor="#DDD"
-                HorizontalOptions="Fill"/>
-
-            <Label
-                Text="Select or Scan the Pick Document to open"
-                FontSize="13"
-                TextColor="Black"
-                Margin="0,6,0,8"/>
-        </VerticalStackLayout>
+          
 
         <!-- ===================== -->
         <!-- CONTENT -->
         <!-- ===================== -->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
 
             <!-- LOADING -->
             <ActivityIndicator
@@ -132,21 +100,21 @@
                             <Label
                                 Text="{Binding PickNo}"
                                 TextColor="Black"
-                                FontSize="14" />
+                                 />
 
                             <!-- SalesOrderNo -->
                             <Label
                                 Grid.Column="1"
                                 Text="{Binding SalesOrderNo}"
                                 TextColor="Black"
-                                FontSize="14" />
+                                 />
 
                             <!-- AssignedUserName -->
                             <Label
                                 Grid.Column="2"
                                 Text="{Binding AssignedUserName}"
                                 TextColor="Black"
-                                FontSize="14" />
+                                 />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

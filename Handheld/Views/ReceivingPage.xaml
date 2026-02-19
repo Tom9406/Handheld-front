@@ -32,7 +32,8 @@
         </Grid>
 
         <!-- CONTENT -->
-        <Grid Grid.Row="1" RowDefinitions="Auto,*">
+        <Grid Grid.Row="1" RowDefinitions="Auto,*"
+               BackgroundColor="White">
 
             <!-- SEARCH -->
             <Entry
@@ -41,8 +42,9 @@
                 ReturnCommand="{Binding SearchCommand}"
                 ReturnType="Search"
                 Placeholder="Buscar Receipt..."
-                Margin="10"
-                BackgroundColor="#F3F4F6"
+                Margin="2"
+                BackgroundColor="White"
+                PlaceholderColor="Black"
                 TextColor="Black" />
 
             <!-- RESULT AREA -->
@@ -62,7 +64,8 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontAttributes="Italic"
-                    TextColor="Gray"/>
+                    
+                    TextColor="Black"/>
 
                 <!-- LIST -->
                 <CollectionView
@@ -77,18 +80,21 @@
 
                             <Label Text="Receipt"
                                    Padding="8"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="1"
                                    Text="Vendor"
                                    Padding="8"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="2"
                                    Text="Status"
                                    Padding="8"
                                    FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"/>
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
                         </Grid>
                     </CollectionView.Header>
 
@@ -99,17 +105,19 @@
                                   ColumnDefinitions="2*,3*,1.5*">
 
                                 <!-- receiptNo -->
-                                <Label Text="{Binding ReceiptNo}" />
+                                <Label Text="{Binding ReceiptNo}" 
+                                       TextColor="Black"/>
 
                                 <!-- vendorName -->
                                 <Label Grid.Column="1"
-                                       Text="{Binding VendorName}" />
+                                       Text="{Binding VendorName}"
+                                       TextColor="Black"/>
 
                                 <!-- status -->
                                 <Label Grid.Column="2"
-                                       Text="{Binding Status}"
-                                       FontAttributes="Bold"
-                                       HorizontalTextAlignment="Center"/>
+                                       Text="{Binding Status}"                                       
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="Black"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

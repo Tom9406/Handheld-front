@@ -41,7 +41,7 @@ namespace Handheld
                 .ConfigureHttpClient(client =>
                 {
 #if ANDROID
-                    client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+                    client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
                     client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
@@ -61,13 +61,13 @@ namespace Handheld
                 .ConfigureHttpClient(client =>
                 {
 #if ANDROID
-                    client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+                    client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
                     client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
                 });
 
-            builder.Services.AddHttpClient<MovementsService>()
+            builder.Services.AddHttpClient<InventoryMovementService>()
 #if ANDROID
                 .ConfigurePrimaryHttpMessageHandler(() =>
                 {
@@ -81,7 +81,7 @@ namespace Handheld
                 .ConfigureHttpClient(client =>
                 {
 #if ANDROID
-                    client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+                    client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
                     client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
@@ -102,7 +102,7 @@ namespace Handheld
     .ConfigureHttpClient(client =>
     {
 #if ANDROID
-        client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+        client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
         client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
@@ -122,7 +122,7 @@ namespace Handheld
     .ConfigureHttpClient(client =>
     {
 #if ANDROID
-        client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+        client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
         client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
@@ -143,7 +143,7 @@ namespace Handheld
     .ConfigureHttpClient(client =>
     {
 #if ANDROID
-        client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+        client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
         client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
@@ -163,7 +163,7 @@ namespace Handheld
     .ConfigureHttpClient(client =>
     {
 #if ANDROID
-        client.BaseAddress = new Uri("https://10.0.2.2:7216/");
+        client.BaseAddress = new Uri("http://192.168.24.19:5261/");
 #else
         client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
@@ -181,6 +181,7 @@ namespace Handheld
             builder.Services.AddTransient<ShipmentHeadersViewModel>();
             builder.Services.AddTransient<ShipmentLineViewModel>();
             builder.Services.AddTransient<CompanyViewModel>();
+            builder.Services.AddTransient<InventoryMovementsViewModel>();
 
 
 

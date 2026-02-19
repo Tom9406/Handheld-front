@@ -16,40 +16,60 @@
 
             <Frame BackgroundColor="White"
                    CornerRadius="12"
-                   Padding="20"
+                   Padding="20"                   
                    HasShadow="True">
 
                 <VerticalStackLayout Spacing="14">
 
                     <Entry Placeholder="Company Code"
-                           Text="{Binding Code}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding Code}" 
+                           TextColor="Black"/>
 
                     <Entry Placeholder="Company Name"
-                           Text="{Binding Name}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding Name}" 
+                           TextColor="Black" />
 
                     <Entry Placeholder="Currency Code (USD)"
-                           Text="{Binding CurrencyCode}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding CurrencyCode}" 
+                           TextColor="Black" />
 
                     <Entry Placeholder="Time Zone (UTC)"
-                           Text="{Binding TimeZone}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding TimeZone}" 
+                           TextColor="Black" />
 
                     <Entry Placeholder="Company Type"
-                           Text="{Binding CompanyType}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding CompanyType}" 
+                           TextColor="Black" />
 
                     <Entry Placeholder="Legal Name"
-                           Text="{Binding LegalName}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding LegalName}" 
+                           TextColor="Black"/>
 
                     <Entry Placeholder="Tax ID"
-                           Text="{Binding TaxId}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding TaxId}" 
+                           TextColor="Black"/>
 
                     <Entry Placeholder="Address"
-                           Text="{Binding Address1}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding Address1}" 
+                           TextColor="Black"/>
 
                     <Entry Placeholder="City"
-                           Text="{Binding City}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding City}" 
+                           TextColor="Black"/>
 
                     <Entry Placeholder="Country"
-                           Text="{Binding Country}" />
+                           PlaceholderColor="Black"
+                           Text="{Binding Country}" 
+                           TextColor="Black"/>
 
                     <Button Text="Register Company"
                             BackgroundColor="{StaticResource BrandBlue}"

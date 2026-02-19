@@ -3,136 +3,108 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.MovementsPage"
-    Shell.NavBarIsVisible="False">
+    Title="Inventory Movements"
+    Shell.BackgroundColor="{StaticResource BrandBlue}"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="White">
 
-        <!-- TOP BAR -->
-        <Grid
+        <!-- SEARCH -->
+        <Entry
             Grid.Row="0"
-            BackgroundColor="{StaticResource BrandBlue}"
-            HeightRequest="64"
-            Padding="12"
-            ColumnDefinitions="Auto,*">
+            Text="{Binding SearchText}"
+            ReturnCommand="{Binding SearchCommand}"
+            ReturnType="Search"
+            Placeholder="Buscar Item / Bin / Type / Ref..."
+            Margin="2"
+            BackgroundColor="White"
+            PlaceholderColor="Black"
+            TextColor="Black"/>
 
-            <Label
-                Text="☰"
-                FontSize="22"
-                TextColor="White"
-                VerticalOptions="Center"/>
+        <!-- RESULT AREA -->
+        <Grid Grid.Row="1">
 
+            <!-- LOADING -->
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- NO DATA -->
             <Label
-                Grid.Column="1"
-                Text="Inventory Movements"
+                Text="No hay movimientos"
+                IsVisible="{Binding IsEmpty}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                FontSize="22"
-                FontAttributes="Bold"
-                TextColor="White"/>
-        </Grid>
+                FontAttributes="Italic"
+                TextColor="Black"/>
 
-        <!-- CONTENT -->
-        <Grid
-            Grid.Row="1"
-            RowDefinitions="Auto,Auto,*">
-
-            <!-- LOADING (overlay) -->
-            <ActivityIndicator
-                x:Name="LoadingIndicator"
-                Grid.RowSpan="3"
-                IsVisible="False"
-                IsRunning="False"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"/>
-
-            <!-- ERROR (overlay) -->
-            <Label
-                x:Name="ErrorLabel"
-                Grid.RowSpan="3"
-                IsVisible="False"
-                TextColor="Red"
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"/>
-
-            <!-- SEARCH / SCAN -->
-            <Entry
-                Grid.Row="0"
-                x:Name="SearchEntry"
-                Placeholder="Scan Item / Bin / Movement / Reference..."
-                ReturnType="Search"
-                Completed="OnSearchCompleted"
-                ClearButtonVisibility="WhileEditing"
-                Margin="10"
-                BackgroundColor="#F3F4F6" />
-
-            <!-- MOVEMENTS LIST -->
+            <!-- LIST -->
             <CollectionView
-                Grid.Row="2"
-                x:Name="MovementList"
-                IsVisible="False"
-                SelectionMode="None"
-                BackgroundColor="White">
+                ItemsSource="{Binding Movements}"
+                IsVisible="{Binding HasData}"
+                SelectionMode="None">
 
                 <!-- HEADER -->
                 <CollectionView.Header>
-                    <Grid
-                        BackgroundColor="#E5E7EB"
-                        ColumnDefinitions="2*,2*,2*,2*">
+                    <Grid BackgroundColor="#E5E7EB"
+                          ColumnDefinitions="2*,1.5*,1*,2*">
 
-                        <Label
-                            Text="Item"
-                            Padding="8"
-                            FontAttributes="Bold"/>
+                        <Label Text="Item"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
 
-                        <Label
-                            Grid.Column="1"
-                            Text="Bin"
-                            Padding="8"
-                            FontAttributes="Bold"
-                            HorizontalTextAlignment="Center"/>
+                        <Label Grid.Column="1"
+                               Text="Bin"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
 
-                        <Label
-                            Grid.Column="2"
-                            Text="Qty"
-                            Padding="8"
-                            FontAttributes="Bold"
-                            HorizontalTextAlignment="Center"/>
+                        <Label Grid.Column="2"
+                               Text="Qty"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
 
-                        <Label
-                            Grid.Column="3"
-                            Text="Type"
-                            Padding="8"
-                            FontAttributes="Bold"
-                            HorizontalTextAlignment="Center"/>
+                        <Label Grid.Column="3"
+                               Text="Type"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
                     </Grid>
                 </CollectionView.Header>
 
-                <!-- Movement -->
+                <!-- ITEMS -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid
-                            Padding="8"
-                            ColumnDefinitions="2*,2*,2*,2*">
+                        <Grid Padding="8"
+                              ColumnDefinitions="2*,1.5*,1*,2*">
 
-                            <Label
-                                Text="{Binding ItemNo}" />
+                            <Label Text="{Binding ItemNo}"
+                                   TextColor="Black"/>
 
-                            <Label
-                                Grid.Column="1"
-                                Text="{Binding BinCode}"
-                                HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="1"
+                                   Text="{Binding BinCode}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
 
-                            <Label
-                                Grid.Column="2"
-                                Text="{Binding Quantity}"
-                                FontAttributes="Bold"
-                                HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{Binding Quantity}"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
 
-                            <Label
-                                Grid.Column="3"
-                                Text="{Binding MovementType}"
-                                HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="3"
+                                   Text="{Binding MovementType}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

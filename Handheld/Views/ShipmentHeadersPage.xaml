@@ -32,17 +32,21 @@
         </Grid>
 
         <!-- CONTENT -->
-        <Grid Grid.Row="1" RowDefinitions="Auto,*">
+        <Grid Grid.Row="1" RowDefinitions="Auto,*"
+              BackgroundColor="White">
 
             <!-- SEARCH -->
             <Entry
+                x:Name="SearchEntry"
                 Grid.Row="0"
                 Text="{Binding SearchText}"
                 ReturnCommand="{Binding SearchCommand}"
                 ReturnType="Search"
                 Placeholder="Buscar shipment..."
-                Margin="10"
-                BackgroundColor="#F3F4F6" />
+                Margin="2"
+                BackgroundColor="White"
+                PlaceholderColor="Black"
+                TextColor="Black" />
 
             <!-- RESULT AREA -->
             <Grid Grid.Row="1">
@@ -61,14 +65,15 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontAttributes="Italic"
-                    TextColor="Gray"/>
+                    TextColor="Black"/>
 
                 <!-- LIST -->
                 <CollectionView
                     ItemsSource="{Binding Items}"
                     IsVisible="{Binding HasData}"
                     SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged">
+                    SelectionChanged="OnSelectionChanged"
+                    BackgroundColor="White">
 
                     <!-- HEADER -->
                     <CollectionView.Header>
@@ -77,18 +82,21 @@
 
                             <Label Text="Shipment"
                                    Padding="8"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="1"
                                    Text="Customer"
                                    Padding="8"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="2"
                                    Text="Lines"
                                    Padding="8"
                                    FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"/>
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
                         </Grid>
                     </CollectionView.Header>
 
@@ -99,15 +107,17 @@
                                   ColumnDefinitions="2*,2*,1*">
 
                                 <Label Text="{Binding ShipmentNo}"
-                                       FontAttributes="Bold"/>
+                                       
+                                       TextColor="Black"/>
 
                                 <Label Grid.Column="1"
-                                       Text="{Binding CustomerName}" />
+                                       Text="{Binding CustomerName}" 
+                                       TextColor="Black"/>
 
                                 <Label Grid.Column="2"
                                        Text="{Binding TotalLines}"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold"/>
+                                       HorizontalTextAlignment="Center"                                       
+                                       TextColor="Black"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

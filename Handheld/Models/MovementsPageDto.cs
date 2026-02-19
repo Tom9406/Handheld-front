@@ -5,15 +5,24 @@ namespace Handheld.Models;
 public class MovementsPageDto
 {
     [JsonPropertyName("id")]
-    public string MovId { get; set; } = null!;
+    public string Id { get; set; } = null!;
+
+    [JsonPropertyName("itemId")]
+    public string ItemId { get; set; } = null!;
 
     [JsonPropertyName("itemNo")]
     public string ItemNo { get; set; } = null!;
 
+    [JsonPropertyName("itemDescription")]
+    public string ItemDescription { get; set; } = null!;
+
+    [JsonPropertyName("binId")]
+    public string BinId { get; set; } = null!;
+
     [JsonPropertyName("binCode")]
     public string BinCode { get; set; } = null!;
 
-    [JsonPropertyName("qty")]
+    [JsonPropertyName("quantity")]
     public decimal Quantity { get; set; }
 
     [JsonPropertyName("movementType")]

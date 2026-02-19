@@ -8,7 +8,8 @@
     Shell.ForegroundColor="White"
     Shell.TitleColor="White">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="White">
 
         <!-- SEARCH -->
         <Entry
@@ -17,9 +18,11 @@
             Text="{Binding SearchText}"
             ReturnCommand="{Binding SearchCommand}"
             ReturnType="Search"
-            Placeholder="Buscar item..."
-            Margin="10"
-            BackgroundColor="#F3F4F6" />
+            Placeholder="Buscar ..."
+            Margin="2"
+            BackgroundColor="White" 
+            PlaceholderColor="Black"
+            TextColor="Black"/>
 
         <!-- RESULT AREA -->
         <Grid Grid.Row="1">
@@ -38,7 +41,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 FontAttributes="Italic"
-                TextColor="Gray"/>
+                TextColor="Black"/>
 
             <!-- LIST -->
             <CollectionView
@@ -49,10 +52,10 @@
                 <CollectionView.Header>
                     <Grid BackgroundColor="#E5E7EB"
                           ColumnDefinitions="3*,1.5*,1*,1*">
-                        <Label Text="Item" Padding="8" FontAttributes="Bold"/>
-                        <Label Grid.Column="1" Text="Bin" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="2" Text="Qty" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="3" Text="UOM" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label Text="Item" Padding="8" FontAttributes="Bold" TextColor="Black"/>
+                        <Label Grid.Column="1" Text="Bin" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Grid.Column="2" Text="Qty" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Grid.Column="3" Text="UOM" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
                     </Grid>
                 </CollectionView.Header>
 
@@ -60,20 +63,24 @@
                     <DataTemplate>
                         <Grid Padding="8" ColumnDefinitions="3*,1.5*,1*,1*">
 
-                            <Label Text="{Binding ItemNo}" />
+                            <Label Text="{Binding ItemNo}" 
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="1"
                                    Text="{Binding BinCode}"
-                                   HorizontalTextAlignment="Center"/>
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="2"
                                    Text="{Binding StockQty}"
-                                   FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"/>
+                                   
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
 
                             <Label Grid.Column="3"
                                    Text="{Binding ItemUOM}"
-                                   HorizontalTextAlignment="Center"/>
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

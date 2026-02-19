@@ -17,6 +17,7 @@ public partial class ShipmentHeadersPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.InitializeAsync();
+        SearchEntry.Focus();
     }
 
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)

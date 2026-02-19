@@ -8,7 +8,8 @@
     Shell.ForegroundColor="White"
     Shell.TitleColor="White">
 
-    <Grid RowDefinitions="*">
+    <Grid RowDefinitions="*"
+          BackgroundColor="White">
 
         <!-- LOADING -->
         <ActivityIndicator
@@ -24,7 +25,7 @@
             HorizontalOptions="Center"
             VerticalOptions="Center"
             FontAttributes="Italic"
-            TextColor="Gray"/>
+            TextColor="Black"/>
 
         <!-- LIST -->
         <CollectionView
@@ -35,32 +36,37 @@
             <CollectionView.Header>
                 <Grid BackgroundColor="#E5E7EB"
                       ColumnDefinitions="3*,1*,1*,1*">
-                    <Label Text="Item" Padding="8" FontAttributes="Bold"/>
-                    <Label Grid.Column="1" Text="Ord." Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                    <Label Grid.Column="2" Text="Rem." Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                    <Label Grid.Column="3" Text="Status" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    <Label Text="Item" Padding="8" FontAttributes="Bold" TextColor="Black"/>
+                    <Label Grid.Column="1" Text="Ord." Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
+                    <Label Grid.Column="2" Text="Rem." Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
+                    <Label Grid.Column="3" Text="Status" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
                 </Grid>
             </CollectionView.Header>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="8"
-                          ColumnDefinitions="3*,1*,1*,1*">
+                          ColumnDefinitions="3*,1*,1*,1*"
+                          BackgroundColor="white">
 
-                        <Label Text="{Binding ItemNo}" />
+                        <Label Text="{Binding ItemNo}" 
+                               TextColor="Black"/>
 
                         <Label Grid.Column="1"
                                Text="{Binding OrderedQty}"
-                               HorizontalTextAlignment="Center"/>
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
 
                         <Label Grid.Column="2"
                                Text="{Binding RemainingQty}"
-                               FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"/>
+                              
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
 
                         <Label Grid.Column="3"
                                Text="{Binding LineStatus}"
-                               HorizontalTextAlignment="Center"/>
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
 
                     </Grid>
                 </DataTemplate>
