@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.ItemInquiryPage"
+    Title="Item Inquiry"
+    Shell.BackgroundColor="{StaticResource BrandBlue}"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- SEARCH -->
+        <Entry
+            Grid.Row="0"
+            x:Name="SearchEntry"
+            Text="{Binding SearchText}"
+            ReturnCommand="{Binding SearchCommand}"
+            ReturnType="Search"
+            Placeholder="Buscar item..."
+            Margin="10"
+            BackgroundColor="#F3F4F6" />
+
+        <!-- RESULT AREA -->
+        <Grid Grid.Row="1">
+
+            <!-- LOADING -->
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- NO DATA -->
+            <Label
+                Text="No hay datos"
+                IsVisible="{Binding IsEmpty}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontAttributes="Italic"
+                TextColor="Gray"/>
+
+            <!-- LIST -->
+            <CollectionView
+                ItemsSource="{Binding Items}"
+                IsVisible="{Binding HasData}"
+                SelectionMode="None">
+
+                <CollectionView.Header>
+                    <Grid BackgroundColor="#E5E7EB"
+                          ColumnDefinitions="3*,1.5*,1*,1*">
+                        <Label Text="Item" Padding="8" FontAttributes="Bold"/>
+                        <Label Grid.Column="1" Text="Bin" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label Grid.Column="2" Text="Qty" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label Grid.Column="3" Text="UOM" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                </CollectionView.Header>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="8" ColumnDefinitions="3*,1.5*,1*,1*">
+
+                            <Label Text="{Binding ItemNo}" />
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding BinCode}"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <Label Grid.Column="2"
+                                   Text="{Binding StockQty}"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <Label Grid.Column="3"
+                                   Text="{Binding ItemUOM}"
+                                   HorizontalTextAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

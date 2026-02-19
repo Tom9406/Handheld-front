@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.Picking_Line_Details"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+        <!-- ===================== -->
+        <!-- TOP BAR -->
+        <!-- ===================== -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="{StaticResource BrandBlue}"
+            HeightRequest="64"
+            Padding="12"
+            ColumnDefinitions="Auto,*">
+
+            <Label
+                Text="☰"
+                FontSize="22"
+                TextColor="White"
+                VerticalOptions="Center"/>
+
+            <Label
+                Grid.Column="1"
+                Text="Picking Line Details"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="22"
+                FontAttributes="Bold"
+                TextColor="White"/>
+        </Grid>
+
+        <!-- ===================== -->
+        <!-- INFO BAR -->
+        <!-- ===================== -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="12,8"
+            BackgroundColor="White">
+
+            <Label
+                Text="Enter the picked quantity"
+                FontSize="13"
+                TextColor="Black"
+                Margin="0,6,0,8"/>
+        </VerticalStackLayout>
+
+        <!-- ===================== -->
+        <!-- LINE DETAILS -->
+        <!-- ===================== -->
+        <Grid
+            Grid.Row="2"
+            Padding="16"
+            RowDefinitions="Auto,Auto,Auto,Auto"
+            ColumnDefinitions="*,*"
+            RowSpacing="12"
+            ColumnSpacing="12"
+            BackgroundColor="White">
+
+            <!-- Item No -->
+            <Label Text="Item No:" FontAttributes="Bold" TextColor="Black" />
+            <Label Grid.Column="1" Text="{Binding Item_No}" TextColor="Black" />
+
+            <!-- Bin -->
+            <Label Grid.Row="1" Text="Bin:" FontAttributes="Bold" TextColor="Black"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Bin}" TextColor="Black"/>
+
+            <!-- Open Qty -->
+            <Label Grid.Row="2" Text="Open Qty:" FontAttributes="Bold" TextColor="Black"/>
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Open_Qty}" TextColor="Black" />
+
+            <!-- Picked Qty -->
+            <Label Grid.Row="3" Text="Picked Qty:" FontAttributes="Bold" TextColor="Black" />
+            <Entry
+                Grid.Row="3"
+                Grid.Column="1"
+                Keyboard="Numeric"
+                Placeholder="Enter quantity" 
+                TextColor="Black"/>
+        </Grid>
+
+        <!-- ===================== -->
+        <!-- ACTION BUTTONS -->
+        <!-- ===================== -->
+        <Grid
+            Grid.Row="3"
+            Padding="12"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="12"
+            BackgroundColor="White">
+
+            <Button
+                Text="Cancel"
+                BackgroundColor="{StaticResource BrandBlue}"
+                TextColor="White"
+                CornerRadius="6" />
+
+            <Button
+                Grid.Column="1"
+                Text="Save"
+                BackgroundColor="{StaticResource BrandBlue}"
+                TextColor="White"
+                CornerRadius="6" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

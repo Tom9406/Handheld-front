@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.PickingPage"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- ===================== -->
+        <!-- TOP BAR -->
+        <!-- ===================== -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="{StaticResource BrandBlue}"
+            HeightRequest="64"
+            Padding="12"
+            ColumnDefinitions="Auto,*">
+
+            <Label
+                Text="☰"
+                FontSize="22"
+                TextColor="White"
+                VerticalOptions="Center"/>
+
+            <Label
+                Grid.Column="1"
+                Text="Picking"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="22"
+                FontAttributes="Bold"
+                TextColor="White"/>
+        </Grid>
+
+        <!-- ===================== -->
+        <!-- FILTER BAR -->
+        <!-- ===================== -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="12,8"
+            BackgroundColor="White">
+
+            <Entry
+                x:Name="SearchEntry"
+                Placeholder="Scan or type"
+                FontSize="18"
+                HeightRequest="48"
+                ReturnType="Done"
+                Completed="OnSearchCompleted"
+                IsTextPredictionEnabled="False"
+                TextColor="Black" />
+
+            <BoxView
+                HeightRequest="1"
+                BackgroundColor="#DDD"
+                HorizontalOptions="Fill"/>
+
+            <Label
+                Text="Select or Scan the Pick Document to open"
+                FontSize="13"
+                TextColor="Black"
+                Margin="0,6,0,8"/>
+        </VerticalStackLayout>
+
+        <!-- ===================== -->
+        <!-- CONTENT -->
+        <!-- ===================== -->
+        <Grid Grid.Row="2">
+
+            <!-- LOADING -->
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                IsVisible="False"
+                IsRunning="False"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+            <!-- ERROR -->
+            <Label
+                x:Name="ErrorLabel"
+                IsVisible="False"
+                TextColor="Red"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+            <!-- PICK LIST -->
+            <CollectionView
+                x:Name="PickingList"
+                SelectionMode="Single"
+                IsVisible="False"
+                BackgroundColor="White">
+
+                <!-- HEADER -->
+                <CollectionView.Header>
+                    <Grid
+                        BackgroundColor="#E5E7EB"
+                        ColumnDefinitions="2*,2*,3*">
+
+                        <Label
+                            Padding="8"
+                            Text="Document No."
+                            FontAttributes="Bold"
+                            TextColor="Black"/>
+
+                        <Label
+                            Grid.Column="1"
+                            Padding="8"
+                            Text="Source No."
+                            FontAttributes="Bold"
+                            TextColor="Black"/>
+
+                        <Label
+                            Grid.Column="2"
+                            Padding="8"
+                            Text="Assigned User"
+                            FontAttributes="Bold"
+                            TextColor="Black"/>
+                    </Grid>
+                </CollectionView.Header>
+
+                <!-- ITEMS -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Padding="8"
+                            ColumnDefinitions="2*,2*,3*"
+                            BackgroundColor="White">
+
+                            <!-- PickNo -->
+                            <Label
+                                Text="{Binding PickNo}"
+                                TextColor="Black"
+                                FontSize="14" />
+
+                            <!-- SalesOrderNo -->
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding SalesOrderNo}"
+                                TextColor="Black"
+                                FontSize="14" />
+
+                            <!-- AssignedUserName -->
+                            <Label
+                                Grid.Column="2"
+                                Text="{Binding AssignedUserName}"
+                                TextColor="Black"
+                                FontSize="14" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

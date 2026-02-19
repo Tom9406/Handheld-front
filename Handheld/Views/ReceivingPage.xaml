@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.ReceivingPage"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- TOP BAR -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="{StaticResource BrandBlue}"
+            HeightRequest="64"
+            Padding="12"
+            ColumnDefinitions="Auto,*">
+
+            <Label
+                Text="☰"
+                FontSize="22"
+                TextColor="White"
+                VerticalOptions="Center"/>
+
+            <Label
+                Grid.Column="1"
+                Text="Receiving"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="22"
+                FontAttributes="Bold"
+                TextColor="White"/>
+        </Grid>
+
+        <!-- CONTENT -->
+        <Grid Grid.Row="1" RowDefinitions="Auto,*">
+
+            <!-- SEARCH -->
+            <Entry
+                Grid.Row="0"
+                Text="{Binding SearchText}"
+                ReturnCommand="{Binding SearchCommand}"
+                ReturnType="Search"
+                Placeholder="Buscar Receipt..."
+                Margin="10"
+                BackgroundColor="#F3F4F6"
+                TextColor="Black" />
+
+            <!-- RESULT AREA -->
+            <Grid Grid.Row="1">
+
+                <!-- LOADING -->
+                <ActivityIndicator
+                    IsRunning="{Binding IsLoading}"
+                    IsVisible="{Binding IsLoading}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
+                <!-- NO DATA -->
+                <Label
+                    Text="No hay datos"
+                    IsVisible="{Binding IsEmpty}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontAttributes="Italic"
+                    TextColor="Gray"/>
+
+                <!-- LIST -->
+                <CollectionView
+                    ItemsSource="{Binding Items}"
+                    IsVisible="{Binding HasData}"
+                    SelectionMode="None">
+
+                    <!-- HEADER -->
+                    <CollectionView.Header>
+                        <Grid BackgroundColor="#E5E7EB"
+                              ColumnDefinitions="2*,3*,1.5*">
+
+                            <Label Text="Receipt"
+                                   Padding="8"
+                                   FontAttributes="Bold"/>
+
+                            <Label Grid.Column="1"
+                                   Text="Vendor"
+                                   Padding="8"
+                                   FontAttributes="Bold"/>
+
+                            <Label Grid.Column="2"
+                                   Text="Status"
+                                   Padding="8"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+                        </Grid>
+                    </CollectionView.Header>
+
+                    <!-- ITEMS -->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="8"
+                                  ColumnDefinitions="2*,3*,1.5*">
+
+                                <!-- receiptNo -->
+                                <Label Text="{Binding ReceiptNo}" />
+
+                                <!-- vendorName -->
+                                <Label Grid.Column="1"
+                                       Text="{Binding VendorName}" />
+
+                                <!-- status -->
+                                <Label Grid.Column="2"
+                                       Text="{Binding Status}"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

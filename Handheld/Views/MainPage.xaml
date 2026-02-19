@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cards="clr-namespace:Handheld.Components.Cards"
+    x:Class="Handheld.Views.MainPage"
+    Shell.BackgroundColor="{StaticResource BrandBlue}"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White"
+    BackgroundColor="{StaticResource PageBackground}">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="Auto,*,Auto">
+
+            <!-- Espacio izquierdo (simula ancho del menú) -->
+            <BoxView WidthRequest="10"
+                 BackgroundColor="Transparent"
+                 Grid.Column="0" />
+
+            <!-- Título centrado real -->
+            <Label Text="Dragon Guard"
+               Grid.Column="1"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="White" />
+
+            <!-- Espacio derecho equivalente -->
+            <BoxView WidthRequest="40"
+                 BackgroundColor="Transparent"
+                 Grid.Column="2" />
+
+        </Grid>
+    </Shell.TitleView>
+
+
+
+
+
+
+    <Grid
+        Padding="16"
+        RowDefinitions="*,*,*,*"
+        ColumnDefinitions="*,*,*"
+        RowSpacing="16"
+        ColumnSpacing="16">
+
+        <!-- ROW 1 -->
+        <cards:CardView Grid.Row="0" Grid.Column="0"
+                        Icon="📦"
+                        Title="Item Inquiry"
+                        Command="{Binding GoItemCommand}" />
+
+        <cards:CardView Grid.Row="0" Grid.Column="1"
+                        Icon="📍"
+                        Title="Bin Inquiry"
+                        Command="{Binding GoBinCommand}" />
+
+        <cards:CardView Grid.Row="0" Grid.Column="2"
+                        Icon="🧮"
+                        Title="Count"
+                        Command="{Binding GoCountCommand}" />
+
+        <!-- ROW 2 -->
+        <cards:CardView Grid.Row="1" Grid.Column="0"
+                        Icon="📄"
+                        Title="Basic Count"
+                        Command="{Binding GoBasicCountCommand}" />
+
+        <cards:CardView Grid.Row="1" Grid.Column="1"
+                        Icon="📥"
+                        Title="Receive"
+                        Command="{Binding GoReceiveCommand}" />
+
+        <cards:CardView Grid.Row="1" Grid.Column="2"
+                        Icon="📦"
+                        Title="Put-Away"
+                        Command="{Binding GoPutAwayCommand}" />
+
+        <!-- ROW 3 -->
+        <cards:CardView Grid.Row="2" Grid.Column="0"
+                        Icon="🔁"
+                        Title="Ad-hoc Move"
+                        Command="{Binding GoAdhocMoveCommand}" />
+
+        <cards:CardView Grid.Row="2" Grid.Column="1"
+                        Icon="🔄"
+                        Title="Movement"
+                        Command="{Binding GoMovementCommand}" />
+
+        <cards:CardView Grid.Row="2" Grid.Column="2"
+                        Icon="🛒"
+                        Title="Pick"
+                        Command="{Binding GoPickCommand}" />
+
+        <!-- ROW 4 -->
+        <cards:CardView Grid.Row="3" Grid.Column="0"
+                        Icon="🚚"
+                        Title="Ship"
+                        Command="{Binding GoShipCommand}" />
+
+        <cards:CardView Grid.Row="3" Grid.Column="1"
+                        Icon="🧩"
+                        Title="Consumption"
+                        Command="{Binding GoConsumptionCommand}" />
+
+        <cards:CardView Grid.Row="3" Grid.Column="2"
+                        Icon="📤"
+                        Title="Output"
+                        Command="{Binding GoOutputCommand}" />
+
+    </Grid>
+
+</ContentPage>

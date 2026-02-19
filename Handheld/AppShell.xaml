@@ -1,0 +1,41 @@
+<Shell
+    x:Class="Handheld.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Handheld.Views"
+    FlyoutBehavior="Flyout"
+    BackgroundColor="{StaticResource BrandBlue}"
+    ForegroundColor="White"
+    TitleColor="White">
+
+    <!-- Página principal -->
+    <FlyoutItem >
+        <ShellContent
+            ContentTemplate="{DataTemplate views:MainPage}" />
+    </FlyoutItem>
+
+    <!-- Opciones del menú como MenuItem -->
+    <MenuItem Text="🏠 Home"
+          Clicked="OnHomeClicked" />
+
+    <MenuItem Text="🏢 Company"
+       Clicked="OnCompanyClicked" />
+
+    <MenuItem Text="⚙ Settings"
+          Clicked="OnReceivingClicked" />
+
+    <MenuItem Text="👤 Profile"
+          Clicked="OnShipmentClicked" />
+
+    <MenuItem Text="🚪 Logout"
+              Clicked="OnPostClicked" />
+
+
+
+
+
+    
+
+    
+
+</Shell>

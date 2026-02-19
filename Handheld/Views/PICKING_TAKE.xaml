@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.PICKING_TAKE"
+    Shell.NavBarIsVisible="False">
+
+    <!-- 🔑 Grid raíz debe expandirse -->
+    <Grid
+        RowDefinitions="Auto,Auto,*">
+
+        <!-- ===================== -->
+        <!-- TOP BAR -->
+        <!-- ===================== -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="{StaticResource BrandBlue}"
+            HeightRequest="64"
+            Padding="12"
+            ColumnDefinitions="Auto,*">
+
+            <Label
+                Text="☰"
+                FontSize="22"
+                TextColor="White"
+                VerticalOptions="Center"/>
+
+            <Label
+                Grid.Column="1"
+                Text="Picking (Take)"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="22"
+                FontAttributes="Bold"
+                TextColor="White"/>
+        </Grid>
+
+        <!-- ===================== -->
+        <!-- INFO BAR -->
+        <!-- ===================== -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="12,8"
+            BackgroundColor="White">
+
+            <BoxView
+                HeightRequest="1"
+                BackgroundColor="#DDD"
+                HorizontalOptions="Fill"/>
+
+            <Label
+                Text="Scan Bin, then Item"
+                FontSize="13"
+                TextColor="Black"
+                Margin="0,6,0,8"/>
+        </VerticalStackLayout>
+
+        <!-- ===================== -->
+        <!-- PICK LINES -->
+        <!-- ===================== -->
+        <CollectionView
+            Grid.Row="2"
+            x:Name="PickingDetails"
+            SelectionMode="Single"
+            SelectionChanged="PickingDetails_SelectionChanged">
+
+            <CollectionView.Background>
+                <SolidColorBrush Color="White" />
+            </CollectionView.Background> 
+
+            <!-- HEADER -->
+            <CollectionView.Header>
+                <Grid
+                    BackgroundColor="#E5E7EB"
+                    ColumnDefinitions="*,*,*,*"
+                    RowDefinitions="Auto">
+
+                    <Label Padding="8" Text="Bin" FontAttributes="Bold" TextColor="Black"/>
+                    <Label Grid.Column="1" Padding="8" Text="Item No." FontAttributes="Bold" TextColor="Black"/>
+                    <Label Grid.Column="2" Padding="8" Text="Open Qty" FontAttributes="Bold" TextColor="Black"/>
+                    <Label Grid.Column="3" Padding="8" Text="UOM" FontAttributes="Bold" TextColor="Black"/>
+
+                    <BoxView
+                        Grid.ColumnSpan="4"
+                        HeightRequest="1"
+                        BackgroundColor="#D1D5DB"
+                        VerticalOptions="End"/>
+                </Grid>
+            </CollectionView.Header>
+
+            <!-- ITEMS -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        Padding="8"
+                        ColumnDefinitions="*,*,*,*"
+                        BackgroundColor="White">
+
+                        <Label Text="{Binding Bin}" TextColor="Black" FontSize="14"/>
+                        <Label Grid.Column="1" Text="{Binding Item_No}" TextColor="Black" FontSize="14"/>
+                        <Label Grid.Column="2" Text="{Binding Open_Qty}" TextColor="Black" FontSize="14"/>
+                        <Label Grid.Column="3" Text="{Binding UOM}" TextColor="Black" FontSize="14"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
