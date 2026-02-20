@@ -50,6 +50,7 @@
         <cards:CardView Grid.Row="0" Grid.Column="0"
                         Icon="📦"
                         Title="Item Inquiry"
+                        
                         Command="{Binding GoItemCommand}" />
 
         <cards:CardView Grid.Row="0" Grid.Column="1"

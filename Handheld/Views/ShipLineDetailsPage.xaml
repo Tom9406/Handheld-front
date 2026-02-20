@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.ShipLineDetailsPage"
+    Title="Shipment Line"
+    Shell.BackgroundColor="{StaticResource BrandBlue}"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          BackgroundColor="White">
+
+        <!-- INFO BAR -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Padding="12,8"
+            BackgroundColor="White">
+
+            <Label
+                Text="Enter the shipped quantity"
+                FontSize="13"
+                TextColor="Black"
+                Margin="0,6,0,8"/>
+        </VerticalStackLayout>
+
+        <!-- LINE DETAILS -->
+        <Grid
+            Grid.Row="1"
+            Padding="16"
+            RowDefinitions="Auto,Auto,Auto"
+            ColumnDefinitions="*,*"
+            RowSpacing="12"
+            ColumnSpacing="12"
+            BackgroundColor="White">
+
+            <!-- Item No -->
+            <Label Text="Item No:" FontAttributes="Bold" TextColor="Black" />
+            <Label Grid.Column="1"
+                   Text="{Binding ItemNo}"
+                   TextColor="Black" />
+
+            <!-- Ordered Qty -->
+            <Label Grid.Row="1"
+                   Text="Ordered Qty:"
+                   FontAttributes="Bold"
+                   TextColor="Black"/>
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding OrderedQty}"
+                   TextColor="Black" />
+
+            <!-- Ship Qty -->
+            <Label Grid.Row="2"
+                   Text="Ship Qty:"
+                   FontAttributes="Bold"
+                   TextColor="Black" />
+            <Entry
+                Grid.Row="2"
+                Grid.Column="1"
+                Keyboard="Numeric"
+                Text="{Binding ShippedQty}"
+                Placeholder="Enter quantity"
+                TextColor="Black"/>
+        </Grid>
+
+        <!-- ACTION BUTTONS -->
+        <Grid
+            Grid.Row="2"
+            Padding="12"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="12"
+            BackgroundColor="White">
+
+            <Button
+                Text="Cancel"
+                BackgroundColor="{StaticResource BrandBlue}"
+                TextColor="White"
+                CornerRadius="6" />
+
+            <Button
+                Grid.Column="1"
+                Text="Save"
+                Clicked="OnSaveClicked"
+                BackgroundColor="{StaticResource BrandBlue}"
+                TextColor="White"
+                CornerRadius="6" /> 
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

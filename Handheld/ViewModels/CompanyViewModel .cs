@@ -117,10 +117,7 @@ public class CompanyViewModel : INotifyPropertyChanged
                 string.IsNullOrWhiteSpace(CurrencyCode) ||
                 string.IsNullOrWhiteSpace(TimeZone))
                         {
-                            await Application.Current.MainPage.DisplayAlert(
-                                "Validation",
-                                "Required fields missing.",
-                                "OK");
+                            await Application.Current.MainPage.DisplayAlert("Validation","Required fields missing.","OK");
 
                 return;
             }

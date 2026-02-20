@@ -8,71 +8,106 @@
     Shell.ForegroundColor="White"
     Shell.TitleColor="White">
 
-    <Grid RowDefinitions="*"
+    <Grid RowDefinitions="Auto,*"
           BackgroundColor="White">
 
-        <!-- LOADING -->
-        <ActivityIndicator
-            IsRunning="{Binding IsLoading}"
-            IsVisible="{Binding IsLoading}"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+        <!-- SEARCH -->
+        <Entry
+            Grid.Row="0"
+            x:Name="SearchEntry"
+            Text="{Binding SearchText, Mode=TwoWay}"
+            ReturnType="Search"
+            Placeholder="Buscar línea..."
+            Margin="2"
+            BackgroundColor="White"
+            PlaceholderColor="Black"
+            TextColor="Black" />    
 
-        <!-- NO DATA -->
-        <Label
-            Text="No hay líneas"
-            IsVisible="{Binding IsEmpty}"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            FontAttributes="Italic"
-            TextColor="Black"/>
+        <!-- RESULT AREA -->
+        <Grid Grid.Row="1">
 
-        <!-- LIST -->
-        <CollectionView
-            ItemsSource="{Binding Lines}"
-            IsVisible="{Binding HasData}"
-            SelectionMode="None">
+            <!-- LOADING -->
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
 
-            <CollectionView.Header>
-                <Grid BackgroundColor="#E5E7EB"
-                      ColumnDefinitions="3*,1*,1*,1*">
-                    <Label Text="Item" Padding="8" FontAttributes="Bold" TextColor="Black"/>
-                    <Label Grid.Column="1" Text="Ord." Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
-                    <Label Grid.Column="2" Text="Rem." Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
-                    <Label Grid.Column="3" Text="Status" Padding="8" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Black"/>
-                </Grid>
-            </CollectionView.Header>
+            <!-- NO DATA -->
+            <Label
+                Text="No hay líneas"
+                IsVisible="{Binding IsEmpty}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontAttributes="Italic"
+                TextColor="Black" />
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="8"
-                          ColumnDefinitions="3*,1*,1*,1*"
-                          BackgroundColor="white">
+            <!-- LIST -->
+            <CollectionView
+                ItemsSource="{Binding Lines}"
+                IsVisible="{Binding HasData}"
+                SelectionMode="Single"
+                SelectionChanged="OnSelectionChanged">
 
-                        <Label Text="{Binding ItemNo}" 
+                <!-- HEADER -->
+                <CollectionView.Header>
+                    <Grid BackgroundColor="#E5E7EB"
+                          ColumnDefinitions="3*,1*,1*,1*">
+                        <Label Text="Item"
+                               Padding="8"
+                               FontAttributes="Bold"
                                TextColor="Black"/>
-
                         <Label Grid.Column="1"
-                               Text="{Binding OrderedQty}"
+                               Text="Ord."
+                               Padding="8"
+                               FontAttributes="Bold"
                                HorizontalTextAlignment="Center"
                                TextColor="Black"/>
-
                         <Label Grid.Column="2"
-                               Text="{Binding RemainingQty}"
-                              
+                               Text="Rem."
+                               Padding="8"
+                               FontAttributes="Bold"
                                HorizontalTextAlignment="Center"
                                TextColor="Black"/>
-
                         <Label Grid.Column="3"
-                               Text="{Binding LineStatus}"
+                               Text="Status"
+                               Padding="8"
+                               FontAttributes="Bold"
                                HorizontalTextAlignment="Center"
                                TextColor="Black"/>
-
                     </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                </CollectionView.Header>
 
-        </CollectionView>
+                <!-- ROWS -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="8"
+                              ColumnDefinitions="3*,1*,1*,1*">
+
+                            <Label Text="{Binding ItemNo}"
+                                   TextColor="Black"/>
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding OrderedQty}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
+
+                            <Label Grid.Column="2"
+                                   Text="{Binding RemainingQty}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
+
+                            <Label Grid.Column="3"
+                                   Text="{Binding LineStatus}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Grid>
 
     </Grid>
 </ContentPage>

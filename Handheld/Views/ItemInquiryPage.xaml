@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.ItemInquiryPage"
-    Title="Item Inquiry"
+    Title="Item Inquiry"   
     Shell.BackgroundColor="{StaticResource BrandBlue}"
     Shell.ForegroundColor="White"
     Shell.TitleColor="White">

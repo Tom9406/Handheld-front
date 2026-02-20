@@ -10,10 +10,8 @@ namespace Handheld.ViewModels
     {
         private readonly ShipmentLineService _shipmentLineService;
 
-        // 🔹 Temporalmente fijo
         private const string CompanyId = "FC73E7BF-C62D-48FF-AC17-18244D67DFE4";
 
-        // 🔹 Se asigna cuando se toca o escanea el header
         private string _shipmentId;
         public string ShipmentId
         {
@@ -21,7 +19,25 @@ namespace Handheld.ViewModels
             set => SetProperty(ref _shipmentId, value);
         }
 
+        // 🔹 Lista completa
+        private List<ShipmentLineDto> _allLines = new();
+
+        // 🔹 Lista visible
         public ObservableCollection<ShipmentLineDto> Lines { get; } = new();
+
+        // 🔹 FILTRO AUTOMÁTICO
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (SetProperty(ref _searchText, value))
+                {
+                    FilterLines(); // 🔥 Se ejecuta al escribir o escanear
+                }
+            }
+        }
 
         private string _statusFilter;
         public string StatusFilter
@@ -31,7 +47,6 @@ namespace Handheld.ViewModels
         }
 
         public bool HasData => Lines.Count > 0;
-
         public override bool IsEmpty => !IsLoading && !HasError && !HasData;
 
         public ICommand LoadCommand { get; }
@@ -67,6 +82,7 @@ namespace Handheld.ViewModels
                 ErrorMessage = string.Empty;
 
                 Lines.Clear();
+                _allLines.Clear();
 
                 var result = await _shipmentLineService.GetShipmentLinesAsync(
                     companyId: CompanyId,
@@ -75,36 +91,60 @@ namespace Handheld.ViewModels
                     pageNumber: 1,
                     pageSize: 20);
 
-                // 🔎 DEBUG AQUÍ
-                System.Diagnostics.Debug.WriteLine($"ShipmentId enviado: {ShipmentId}");
-                System.Diagnostics.Debug.WriteLine($"Result null: {result == null}");
-                System.Diagnostics.Debug.WriteLine($"Data null: {result?.Data == null}");
-                System.Diagnostics.Debug.WriteLine($"Cantidad recibida: {result?.Data?.Count}");
-
                 if (result?.Data != null)
                 {
-                    foreach (var line in result.Data)
+                    _allLines = result.Data.ToList();
+
+                    foreach (var line in _allLines)
                         Lines.Add(line);
                 }
-
-                // 🔎 DEBUG FINAL
-                System.Diagnostics.Debug.WriteLine($"Lines.Count después de llenar: {Lines.Count}");
             }
             catch (Exception ex)
             {
                 HasError = true;
                 ErrorMessage = ex.Message;
-
-                System.Diagnostics.Debug.WriteLine($"ERROR: {ex.Message}");
             }
             finally
             {
                 IsLoading = false;
-
                 OnPropertyChanged(nameof(HasData));
                 OnPropertyChanged(nameof(IsEmpty));
             }
         }
 
+        private void FilterLines()
+        {
+            if (_allLines == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                Lines.Clear();
+                foreach (var line in _allLines)
+                    Lines.Add(line);
+                return;
+            }
+
+            var search = SearchText.Trim();
+
+            var filtered = _allLines
+                .Where(x =>
+                    (x.ItemNo?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (x.ItemDescription?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (x.UnitOfMeasure?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (x.BinCode?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (x.LineStatus?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    x.LineNo.ToString().Contains(search) ||
+                    x.OrderedQty.ToString().Contains(search) ||
+                    x.PickedQty.ToString().Contains(search) ||
+                    x.ShippedQty.ToString().Contains(search) ||
+                    x.RemainingQty.ToString().Contains(search)
+                )
+                .ToList();
+
+            Lines.Clear();
+            foreach (var line in filtered)
+                Lines.Add(line);
+        }
     }
 }

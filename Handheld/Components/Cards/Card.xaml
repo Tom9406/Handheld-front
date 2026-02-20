@@ -34,7 +34,7 @@
             <!-- Título -->
             <Label
                 Text="{Binding Title, Source={x:Reference Root}}"
-                FontSize="14"
+                FontSize="10"
                 FontAttributes="Bold"
                 HorizontalTextAlignment="Center"
                 TextColor="Black"/>

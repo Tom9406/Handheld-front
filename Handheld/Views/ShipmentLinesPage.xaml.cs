@@ -1,4 +1,5 @@
-﻿using Handheld.ViewModels;
+﻿using Handheld.Models;
+using Handheld.ViewModels;
 using Microsoft.Maui.Controls;
 
 namespace Handheld.Views;
@@ -7,8 +8,8 @@ namespace Handheld.Views;
 public partial class ShipmentLinesPage : ContentPage
 {
     private readonly ShipmentLineViewModel _viewModel;
+    private bool _loaded; // bandera
 
-    // 🔹 Recibe el parámetro desde Shell
     public string ShipmentId
     {
         set
@@ -27,17 +28,42 @@ public partial class ShipmentLinesPage : ContentPage
     {
         base.OnAppearing();
 
-        if (!string.IsNullOrWhiteSpace(_viewModel.ShipmentId))
+        // SOLO carga la primera vez
+        if (!_loaded && !string.IsNullOrWhiteSpace(_viewModel.ShipmentId))
         {
+            _loaded = true;
             await _viewModel.LoadAsync();
         }
+
+        SearchEntry.Focus();
     }
 
-    // 🔹 Método opcional si navegas manualmente sin Shell
+
+
+    private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var line = e.CurrentSelection.FirstOrDefault() as ShipmentLineDto;
+
+        if (line == null)
+            return;
+
+        await Shell.Current.GoToAsync(nameof(ShipLineDetailsPage),
+            new Dictionary<string, object>
+            {
+                ["Line"] = line
+            });
+
+        ((CollectionView)sender).SelectedItem = null;
+    }
+
     public async Task InitializeAsync(string shipmentId)
     {
         _viewModel.ShipmentId = shipmentId;
-        await _viewModel.LoadAsync();
+
+        if (!_loaded)
+        {
+            _loaded = true;
+            await _viewModel.LoadAsync();
+        }
     }
 }
-    
