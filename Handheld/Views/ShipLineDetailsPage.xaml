@@ -59,7 +59,7 @@
                 Grid.Row="2"
                 Grid.Column="1"
                 Keyboard="Numeric"
-                Text="{Binding ShippedQty}"
+                Text="{Binding QtyToAdd}"
                 Placeholder="Enter quantity"
                 TextColor="Black"/>
         </Grid>

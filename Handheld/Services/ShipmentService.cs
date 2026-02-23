@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using Handheld.Models;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 
@@ -45,5 +46,22 @@ public class ShipmentService
             .ReadFromJsonAsync<PagedResponse<ShipmentHeaderDto>>();
 
         return result ?? new PagedResponse<ShipmentHeaderDto>();
+    }
+
+
+    public async Task UpdateShipmentLineAsync(Guid id, UpdateShipmentLineDto dto)
+    {
+        var response = await _httpClient.PutAsJsonAsync(
+            $"api/shipmentlines/{id}",
+            dto
+        );
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            throw new Exception(string.IsNullOrWhiteSpace(error)
+                ? "Error updating shipment line"
+                : error);
+        }
     }
 }

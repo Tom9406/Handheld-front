@@ -1,8 +1,13 @@
-﻿using Handheld.Models;
+﻿using Android.Locations;
+using Handheld.Models;
 using Handheld.Services;
 using Handheld.ViewModels.Base;
+using IntelliJ.Lang.Annotations;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Diagnostics.Metrics;
 using System.Windows.Input;
+using static Java.Util.Jar.Attributes;
 
 namespace Handheld.ViewModels
 {
@@ -34,10 +39,11 @@ namespace Handheld.ViewModels
             {
                 if (SetProperty(ref _searchText, value))
                 {
-                    FilterLines(); // 🔥 Se ejecuta al escribir o escanear
+                    FilterLines(); // Se ejecuta al escribir o escanear
                 }
             }
         }
+
 
         private string _statusFilter;
         public string StatusFilter

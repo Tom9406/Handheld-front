@@ -28,10 +28,8 @@ public partial class ShipmentLinesPage : ContentPage
     {
         base.OnAppearing();
 
-        // SOLO carga la primera vez
-        if (!_loaded && !string.IsNullOrWhiteSpace(_viewModel.ShipmentId))
+        if (!string.IsNullOrWhiteSpace(_viewModel.ShipmentId))
         {
-            _loaded = true;
             await _viewModel.LoadAsync();
         }
 
