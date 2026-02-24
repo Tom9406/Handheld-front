@@ -104,6 +104,12 @@
 	  <MauiXaml Update="Views\PICKING_TAKE.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ReceivingLineDetails.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ReceivingLinesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ReceivingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

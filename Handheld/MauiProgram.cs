@@ -168,6 +168,25 @@ namespace Handheld
         client.BaseAddress = new Uri("https://localhost:7216/");
 #endif
     });
+            builder.Services.AddHttpClient<ReceivingLineService>()
+#if ANDROID
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        return new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+    })
+#endif
+    .ConfigureHttpClient(client =>
+    {
+#if ANDROID
+        client.BaseAddress = new Uri("http://10.0.2.2:5261/");
+#else
+        client.BaseAddress = new Uri("https://localhost:7216/");
+#endif
+    });
 
 
 
@@ -182,6 +201,7 @@ namespace Handheld
             builder.Services.AddTransient<ShipmentLineViewModel>();
             builder.Services.AddTransient<CompanyViewModel>();
             builder.Services.AddTransient<InventoryMovementsViewModel>();
+            builder.Services.AddTransient<ReceivingLineViewModel>();
 
 
 
@@ -197,7 +217,9 @@ namespace Handheld
             builder.Services.AddTransient<ShipmentLinesPage>();
             builder.Services.AddTransient<RegisterCompanyPage>();
             builder.Services.AddTransient<ShipLineDetailsPage>();
-            
+            builder.Services.AddTransient<ReceivingLinesPage>();
+            builder.Services.AddTransient<ReceivingLineDetailsPage>();
+
 
 
 

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.ReceivingLinesPage"
+    Title="Receiving Lines"
+    Shell.BackgroundColor="{StaticResource BrandBlue}"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White">
+
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="White">
+
+        <!-- SEARCH -->
+        <Entry
+            Grid.Row="0"
+            Text="{Binding SearchText, Mode=TwoWay}"
+            ReturnType="Search"
+            Placeholder="Buscar línea..."
+            Margin="2"
+            BackgroundColor="White"
+            PlaceholderColor="Black"
+            TextColor="Black" />
+
+        <!-- RESULT AREA -->
+        <Grid Grid.Row="1">
+
+            <!-- LOADING -->
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- NO DATA -->
+            <Label
+                Text="No hay líneas"
+                IsVisible="{Binding IsEmpty}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontAttributes="Italic"
+                TextColor="Black" />
+
+            <!-- LIST -->
+            <CollectionView
+                ItemsSource="{Binding Lines}"
+                IsVisible="{Binding HasData}"
+                SelectionMode="Single"
+                SelectionChanged="OnSelectionChanged">
+
+                <!-- HEADER -->
+                <CollectionView.Header>
+                    <Grid BackgroundColor="#E5E7EB"
+                          ColumnDefinitions="3*,1*,1*">
+
+                        <Label Text="Item"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+
+                        <Label Grid.Column="1"
+                               Text="Exp."
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
+
+                        <Label Grid.Column="2"
+                               Text="Rec."
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
+                    </Grid>
+                </CollectionView.Header>
+
+                <!-- ROWS -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="8"
+                              ColumnDefinitions="3*,1*,1*">
+
+                            <!-- Si luego agregas ItemCode, cambia Binding -->
+                            <Label Text="{Binding ItemCode}"
+                                   TextColor="Black"/>
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding QuantityExpected}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
+
+                            <Label Grid.Column="2"
+                                   Text="{Binding QuantityReceived}"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

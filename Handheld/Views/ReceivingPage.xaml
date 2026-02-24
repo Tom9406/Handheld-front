@@ -71,7 +71,8 @@
                 <CollectionView
                     ItemsSource="{Binding Items}"
                     IsVisible="{Binding HasData}"
-                    SelectionMode="None">
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged">
 
                     <!-- HEADER -->
                     <CollectionView.Header>

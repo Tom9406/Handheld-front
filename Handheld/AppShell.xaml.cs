@@ -18,6 +18,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("MainPage", typeof(MainPage));
         Routing.RegisterRoute("ShipmentLinesPage", typeof(ShipmentLinesPage));
         Routing.RegisterRoute(nameof(ShipLineDetailsPage), typeof(ShipLineDetailsPage));
+        Routing.RegisterRoute(nameof(ReceivingLinesPage), typeof(ReceivingLinesPage));
+        Routing.RegisterRoute(nameof(ReceivingLineDetailsPage), typeof(ReceivingLineDetailsPage));
     }
 
     private async void OnPostClicked(object sender, EventArgs e)

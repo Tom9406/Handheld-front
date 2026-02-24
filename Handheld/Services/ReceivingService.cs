@@ -27,4 +27,17 @@ public class ReceivingService
             .GetFromJsonAsync<PagedResponse<ReceivingHeaderDto>>(url)
                ?? new PagedResponse<ReceivingHeaderDto>();
     }
+
+    public async Task UpdateReceivingLineAsync(Guid id, UpdateReceivingLineDto dto)
+    {
+        var response = await _http.PutAsJsonAsync(
+            $"api/receivinglines/{id}",
+            dto);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            throw new Exception($"API Error: {error}");
+        }
+    }
 }
