@@ -62,6 +62,25 @@ public partial class ReceivingLineDetailsPage : ContentPage, INotifyPropertyChan
         {
             var newTotal = Line.QuantityReceived + QtyToReceive;
 
+            // 🔒 Validación
+            if (newTotal > Line.QuantityExpected)
+            {
+                await DisplayAlert(
+                    "Error",
+                    "Cannot receive more than expected.",
+                    "OK");
+                return;
+            }
+
+            if (QtyToReceive <= 0)
+            {
+                await DisplayAlert(
+                    "Error",
+                    "Enter a valid quantity.",
+                    "OK");
+                return;
+            }
+
             var dto = new UpdateReceivingLineDto
             {
                 QuantityReceived = newTotal

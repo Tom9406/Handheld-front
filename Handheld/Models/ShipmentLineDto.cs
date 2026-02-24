@@ -41,7 +41,7 @@ namespace Handheld.Models
             {
                 var newValue = value;
 
-                // 🔒 Limitar visualmente al máximo permitido
+                // Limitar visualmente al máximo permitido
                 if (newValue > OrderedQty)
                     newValue = OrderedQty;
 
