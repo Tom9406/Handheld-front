@@ -73,5 +73,7 @@ namespace Handheld.Models
         // Auditoría
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        public decimal AlreadyPostedQty { get; set; }
     }
 }

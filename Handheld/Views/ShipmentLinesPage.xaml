@@ -3,17 +3,21 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.ShipmentLinesPage"
-    Title="Shipment Lines"
-    Shell.BackgroundColor="{StaticResource BrandBlue}"
-    Shell.ForegroundColor="White"
-    Shell.TitleColor="White">
+    xmlns:components="clr-namespace:Handheld.Components.Bars"
+    Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*"
-          BackgroundColor="White">
+    <Grid RowDefinitions="Auto,Auto,*"
+      BackgroundColor="White">
+
+        <!--  CUSTOM BAR -->
+        <components:Bar
+        Grid.Row="0"
+        Title="Shipments Lines"
+        MenuCommand="{Binding PostCommand}" />
 
         <!-- SEARCH -->
         <Entry
-            Grid.Row="0"
+            Grid.Row="1"
             x:Name="SearchEntry"
             Text="{Binding SearchText, Mode=TwoWay}"
             ReturnType="Search"
@@ -24,7 +28,7 @@
             TextColor="Black" />    
 
         <!-- RESULT AREA -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <!-- LOADING -->
             <ActivityIndicator
@@ -52,7 +56,7 @@
                 <!-- HEADER -->
                 <CollectionView.Header>
                     <Grid BackgroundColor="#E5E7EB"
-                          ColumnDefinitions="3*,1*,1*,1*">
+                          ColumnDefinitions="2*,1*,1*,2*">
                         <Label Text="Item"
                                Padding="8"
                                FontAttributes="Bold"
@@ -82,7 +86,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="8"
-                              ColumnDefinitions="3*,1*,1*,1*">
+                              ColumnDefinitions="2*,1*,1*,2*">
 
                             <Label Text="{Binding ItemNo}"
                                    TextColor="Black"/>

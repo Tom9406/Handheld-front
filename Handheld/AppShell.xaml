@@ -3,39 +3,42 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Handheld.Views"
-    FlyoutBehavior="Flyout"
-    BackgroundColor="{StaticResource BrandBlue}"
-    ForegroundColor="White"
-    TitleColor="White">
+    FlyoutBehavior="Flyout">
 
-    <!-- Página principal -->
-    <FlyoutItem >
+    <!-- HOME -->
+    <FlyoutItem Title="Home" Route="home">
         <ShellContent
             ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
 
-    <!-- Opciones del menú como MenuItem -->
-    <MenuItem Text="🏠 Home"
-          Clicked="OnHomeClicked" />
+    <!-- ITEMS -->
+    <FlyoutItem Title="Items" Route="items">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:ItemInquiryPage}" />
+    </FlyoutItem>
 
-    <MenuItem Text="🏢 Company"
-       Clicked="OnCompanyClicked" />
+    <!-- RECEIVING -->
+    <FlyoutItem Title="Receiving" Route="receiving">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:ReceivingPage}" />
+    </FlyoutItem>
 
-    <MenuItem Text="⚙ Settings"
-          Clicked="OnReceivingClicked" />
+    <!-- SHIPMENTS -->
+    <FlyoutItem Title="Shipments" Route="shipments">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:ShipmentHeadersPage}" />
+    </FlyoutItem>
 
-    <MenuItem Text="👤 Profile"
-          Clicked="OnShipmentClicked" />
+    <!-- Pick -->
+    <FlyoutItem Title="Picks" Route="picks">
+        <ShellContent
+        ContentTemplate="{DataTemplate views:PickingPage}" />
+    </FlyoutItem>
 
-    <MenuItem Text="🚪 Logout"
-              Clicked="OnPostClicked" />
-
-
-
-
-
-    
-
-    
+    <!-- Movements -->
+    <FlyoutItem Title="Movements" Route="movements">
+        <ShellContent
+        ContentTemplate="{DataTemplate views:MovementsPage}" />
+    </FlyoutItem>
 
 </Shell>

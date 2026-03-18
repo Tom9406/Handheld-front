@@ -12,7 +12,11 @@ public class InventoryMovementsViewModel : BaseViewModel
 
     private const string CompanyId = "FC73E7BF-C62D-48FF-AC17-18244D67DFE4";
 
-    public ObservableCollection<MovementsPageDto> Movements { get; } = new();
+    public ObservableRangeCollection<MovementsPageDto> Movements { get; } = new();
+
+    private int _pageNumber = 1;
+    private const int PageSize = 20;
+    private bool _hasMoreData = true;
 
     #region Search
 
@@ -21,24 +25,6 @@ public class InventoryMovementsViewModel : BaseViewModel
     {
         get => _searchText;
         set => SetProperty(ref _searchText, value);
-    }
-
-    #endregion
-
-    #region Pagination
-
-    private int _currentPage = 1;
-    public int CurrentPage
-    {
-        get => _currentPage;
-        set => SetProperty(ref _currentPage, value);
-    }
-
-    private int _totalPages;
-    public int TotalPages
-    {
-        get => _totalPages;
-        set => SetProperty(ref _totalPages, value);
     }
 
     #endregion
@@ -55,8 +41,7 @@ public class InventoryMovementsViewModel : BaseViewModel
     #region Commands
 
     public ICommand SearchCommand { get; }
-    public ICommand NextPageCommand { get; }
-    public ICommand PreviousPageCommand { get; }
+    public ICommand LoadMoreCommand { get; }
 
     #endregion
 
@@ -65,8 +50,7 @@ public class InventoryMovementsViewModel : BaseViewModel
         _movementService = movementService;
 
         SearchCommand = new Command(async () => await SearchAsync());
-        NextPageCommand = new Command(async () => await NextPageAsync());
-        PreviousPageCommand = new Command(async () => await PreviousPageAsync());
+        LoadMoreCommand = new Command(async () => await LoadMoreAsync());
 
         Movements.CollectionChanged += (_, __) =>
         {
@@ -82,22 +66,30 @@ public class InventoryMovementsViewModel : BaseViewModel
 
     private async Task SearchAsync()
     {
-        CurrentPage = 1;
-        await LoadAsync();
-    }
-
-    private async Task LoadAsync()
-    {
         if (IsLoading)
             return;
 
+        _pageNumber = 1;
+        _hasMoreData = true;
+
+        Movements.Clear();
+
+        await LoadPageAsync();
+    }
+
+    private async Task LoadMoreAsync()
+    {
+        if (IsLoading || !_hasMoreData)
+            return;
+
+        await LoadPageAsync();
+    }
+
+    private async Task LoadPageAsync()
+    {
         try
         {
             IsLoading = true;
-            HasError = false;
-            ErrorMessage = string.Empty;
-
-            Movements.Clear();
 
             var result = await _movementService.SearchMovementsAsync(
                 companyId: CompanyId,
@@ -105,46 +97,26 @@ public class InventoryMovementsViewModel : BaseViewModel
                 binCode: null,
                 movementType: null,
                 referenceNo: null,
-                pageNumber: CurrentPage,
-                pageSize: 20);
+                pageNumber: _pageNumber,
+                pageSize: PageSize);
 
-            if (result?.Data != null)
+            if (result?.Data != null && result.Data.Count > 0)
             {
-                foreach (var movement in result.Data)
-                    Movements.Add(movement);
+                Movements.AddRange(result.Data);
 
-                TotalPages = result.TotalPages;
+                _pageNumber++;
+
+                if (result.Data.Count < PageSize)
+                    _hasMoreData = false;
             }
-        }
-        catch (Exception ex)
-        {
-            HasError = true;
-            ErrorMessage = ex.Message;
+            else
+            {
+                _hasMoreData = false;
+            }
         }
         finally
         {
             IsLoading = false;
-
-            OnPropertyChanged(nameof(HasData));
-            OnPropertyChanged(nameof(IsEmpty));
-        }
-    }
-
-    private async Task NextPageAsync()
-    {
-        if (CurrentPage < TotalPages)
-        {
-            CurrentPage++;
-            await LoadAsync();
-        }
-    }
-
-    private async Task PreviousPageAsync()
-    {
-        if (CurrentPage > 1)
-        {
-            CurrentPage--;
-            await LoadAsync();
         }
     }
 }

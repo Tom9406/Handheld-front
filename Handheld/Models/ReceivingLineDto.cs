@@ -20,4 +20,6 @@ public class ReceivingLineDto
 
     // Auditoría
     public DateTime CreatedAt { get; set; }
+
+    public decimal PostedQuantityReceived { get; set; }
 }

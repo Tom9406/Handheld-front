@@ -1,13 +1,8 @@
-﻿using Android.Locations;
-using Handheld.Models;
+﻿using Handheld.Models;
 using Handheld.Services;
 using Handheld.ViewModels.Base;
-using IntelliJ.Lang.Annotations;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Diagnostics.Metrics;
 using System.Windows.Input;
-using static Java.Util.Jar.Attributes;
 
 namespace Handheld.ViewModels
 {
@@ -16,6 +11,8 @@ namespace Handheld.ViewModels
         private readonly ShipmentLineService _shipmentLineService;
 
         private const string CompanyId = "FC73E7BF-C62D-48FF-AC17-18244D67DFE4";
+
+        private bool _isPosting;
 
         private string _shipmentId;
         public string ShipmentId
@@ -30,7 +27,11 @@ namespace Handheld.ViewModels
         // 🔹 Lista visible
         public ObservableCollection<ShipmentLineDto> Lines { get; } = new();
 
-        // 🔹 FILTRO AUTOMÁTICO
+        // 🔹 Commands
+        public ICommand LoadCommand { get; }
+        public ICommand PostCommand { get; }
+
+        // 🔹 Filtro
         private string _searchText;
         public string SearchText
         {
@@ -38,12 +39,9 @@ namespace Handheld.ViewModels
             set
             {
                 if (SetProperty(ref _searchText, value))
-                {
-                    FilterLines(); // Se ejecuta al escribir o escanear
-                }
+                    FilterLines();
             }
         }
-
 
         private string _statusFilter;
         public string StatusFilter
@@ -55,13 +53,12 @@ namespace Handheld.ViewModels
         public bool HasData => Lines.Count > 0;
         public override bool IsEmpty => !IsLoading && !HasError && !HasData;
 
-        public ICommand LoadCommand { get; }
-
         public ShipmentLineViewModel(ShipmentLineService shipmentLineService)
         {
             _shipmentLineService = shipmentLineService;
 
             LoadCommand = new Command(async () => await LoadAsync());
+            PostCommand = new Command(async () => await PostAsync());
 
             Lines.CollectionChanged += (_, __) =>
             {
@@ -151,6 +148,40 @@ namespace Handheld.ViewModels
             Lines.Clear();
             foreach (var line in filtered)
                 Lines.Add(line);
+        }
+
+        //  POST FINAL
+        private async Task PostAsync()
+        {
+            if (_isPosting) return;
+
+            
+
+            try
+            {
+                _isPosting = true;
+                IsLoading = true;
+
+                bool success = await _shipmentLineService.PostShipmentAsync(
+                    CompanyId,
+                    ShipmentId
+                );
+
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("OK", "Shipment posted", "OK");
+                    await LoadAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                _isPosting = false;
+                IsLoading = false;
+            }
         }
     }
 }

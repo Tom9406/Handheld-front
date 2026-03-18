@@ -10,10 +10,13 @@ namespace Handheld.ViewModels
     {
         private readonly ItemService _itemService;
 
-        // 🔹 Temporalmente fijo
         private const string CompanyId = "FC73E7BF-C62D-48FF-AC17-18244D67DFE4";
 
-        public ObservableCollection<ItemInquiryDto> Items { get; } = new();
+        public ObservableRangeCollection<ItemInquiryDto> Items { get; } = new();
+
+        private int _pageNumber = 1;
+        private const int PageSize = 20;
+        private bool _hasMoreData = true;
 
         private string _searchText;
         public string SearchText
@@ -27,12 +30,14 @@ namespace Handheld.ViewModels
         public override bool IsEmpty => !IsLoading && !HasError && !HasData;
 
         public ICommand SearchCommand { get; }
+        public ICommand LoadMoreCommand { get; }
 
         public ItemInquiryViewModel(ItemService itemService)
         {
             _itemService = itemService;
 
             SearchCommand = new Command(async () => await SearchAsync());
+            LoadMoreCommand = new Command(async () => await LoadMoreAsync());
 
             Items.CollectionChanged += (_, __) =>
             {
@@ -57,20 +62,12 @@ namespace Handheld.ViewModels
                 HasError = false;
                 ErrorMessage = string.Empty;
 
+                _pageNumber = 1;
+                _hasMoreData = true;
+
                 Items.Clear();
 
-                var result = await _itemService.SearchItemsAsync(
-                    companyId: CompanyId,
-                    itemNo: string.IsNullOrWhiteSpace(SearchText) ? null : SearchText,
-                    binCode: null,
-                    pageNumber: 1,
-                    pageSize: 20);
-
-                if (result?.Data != null)
-                {
-                    foreach (var item in result.Data)
-                        Items.Add(item);
-                }
+                await LoadPageAsync();
             }
             catch (Exception ex)
             {
@@ -80,11 +77,45 @@ namespace Handheld.ViewModels
             finally
             {
                 IsLoading = false;
-
-                OnPropertyChanged(nameof(HasData));
-                OnPropertyChanged(nameof(IsEmpty));
             }
         }
 
+        public async Task LoadMoreAsync()
+        {
+            if (IsLoading || !_hasMoreData)
+                return;
+
+            await LoadPageAsync();
+        }
+
+        private async Task LoadPageAsync()
+        {
+            try
+            {
+                IsLoading = true;
+
+                var result = await _itemService.SearchItemsAsync(
+                    companyId: CompanyId,
+                    itemNo: string.IsNullOrWhiteSpace(SearchText) ? null : SearchText,
+                    binCode: null,
+                    pageNumber: _pageNumber,
+                    pageSize: PageSize);
+
+                if (result?.Data != null && result.Data.Count > 0)
+                {
+                    Items.AddRange(result.Data);
+
+                    _pageNumber++;
+                }
+                else
+                {
+                    _hasMoreData = false;
+                }
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
     }
 }

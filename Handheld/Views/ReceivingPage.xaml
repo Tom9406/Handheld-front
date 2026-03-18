@@ -2,130 +2,103 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:Handheld.Components.Bars"
     x:Class="Handheld.Views.ReceivingPage"
     Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*"
+          BackgroundColor="White">
 
-        <!-- TOP BAR -->
-        <Grid
+        <!-- 🔷 CUSTOM BAR -->
+        <components:Bar
             Grid.Row="0"
-            BackgroundColor="{StaticResource BrandBlue}"
-            HeightRequest="64"
-            Padding="12"
-            ColumnDefinitions="Auto,*">
+            Title="Receiving"
+            MenuCommand="{Binding OpenMenuCommand}" />
 
-            <Label
-                Text="☰"
-                FontSize="22"
-                TextColor="White"
-                VerticalOptions="Center"/>
+        <!-- 🔍 SEARCH -->
+        <Entry
+            Grid.Row="1"
+            Text="{Binding SearchText}"
+            ReturnCommand="{Binding SearchCommand}"
+            ReturnType="Search"
+            Placeholder="Buscar Receipt..."
+            Margin="4"
+            BackgroundColor="White"
+            PlaceholderColor="Black"
+            TextColor="Black" />
 
+        <!-- 📦 RESULT AREA -->
+        <Grid Grid.Row="2">
+
+            <!-- LOADING -->
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- NO DATA -->
             <Label
-                Grid.Column="1"
-                Text="Receiving"
+                Text="No hay datos"
+                IsVisible="{Binding IsEmpty}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                FontSize="22"
-                FontAttributes="Bold"
-                TextColor="White"/>
-        </Grid>
-
-        <!-- CONTENT -->
-        <Grid Grid.Row="1" RowDefinitions="Auto,*"
-               BackgroundColor="White">
-
-            <!-- SEARCH -->
-            <Entry
-                Grid.Row="0"
-                Text="{Binding SearchText}"
-                ReturnCommand="{Binding SearchCommand}"
-                ReturnType="Search"
-                Placeholder="Buscar Receipt..."
-                Margin="2"
-                BackgroundColor="White"
-                PlaceholderColor="Black"
+                FontAttributes="Italic"
                 TextColor="Black" />
 
-            <!-- RESULT AREA -->
-            <Grid Grid.Row="1">
+            <!-- LIST -->
+            <CollectionView
+                ItemsSource="{Binding Items}"
+                IsVisible="{Binding HasData}"
+                SelectionMode="Single"
+                SelectionChanged="OnSelectionChanged">
 
-                <!-- LOADING -->
-                <ActivityIndicator
-                    IsRunning="{Binding IsLoading}"
-                    IsVisible="{Binding IsLoading}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
+                <!-- HEADER -->
+                <CollectionView.Header>
+                    <Grid BackgroundColor="#E5E7EB"
+                          ColumnDefinitions="2*,3*,1.5*">
 
-                <!-- NO DATA -->
-                <Label
-                    Text="No hay datos"
-                    IsVisible="{Binding IsEmpty}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    FontAttributes="Italic"
-                    
-                    TextColor="Black"/>
+                        <Label Text="Receipt"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
 
-                <!-- LIST -->
-                <CollectionView
-                    ItemsSource="{Binding Items}"
-                    IsVisible="{Binding HasData}"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged">
+                        <Label Grid.Column="1"
+                               Text="Vendor"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
 
-                    <!-- HEADER -->
-                    <CollectionView.Header>
-                        <Grid BackgroundColor="#E5E7EB"
+                        <Label Grid.Column="2"
+                               Text="Status"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
+                    </Grid>
+                </CollectionView.Header>
+
+                <!-- ITEMS -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="8"
                               ColumnDefinitions="2*,3*,1.5*">
 
-                            <Label Text="Receipt"
-                                   Padding="8"
-                                   FontAttributes="Bold"
-                                   TextColor="Black"/>
+                            <Label Text="{Binding ReceiptNo}" TextColor="Black"/>
 
                             <Label Grid.Column="1"
-                                   Text="Vendor"
-                                   Padding="8"
-                                   FontAttributes="Bold"
+                                   Text="{Binding VendorName}"
                                    TextColor="Black"/>
 
                             <Label Grid.Column="2"
-                                   Text="Status"
-                                   Padding="8"
-                                   FontAttributes="Bold"
+                                   Text="{Binding Status}"
                                    HorizontalTextAlignment="Center"
                                    TextColor="Black"/>
                         </Grid>
-                    </CollectionView.Header>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-                    <!-- ITEMS -->
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="8"
-                                  ColumnDefinitions="2*,3*,1.5*">
-
-                                <!-- receiptNo -->
-                                <Label Text="{Binding ReceiptNo}" 
-                                       TextColor="Black"/>
-
-                                <!-- vendorName -->
-                                <Label Grid.Column="1"
-                                       Text="{Binding VendorName}"
-                                       TextColor="Black"/>
-
-                                <!-- status -->
-                                <Label Grid.Column="2"
-                                       Text="{Binding Status}"                                       
-                                       HorizontalTextAlignment="Center"
-                                       TextColor="Black"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-
-                </CollectionView>
-
-            </Grid>
+            </CollectionView>
 
         </Grid>
 

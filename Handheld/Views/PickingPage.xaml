@@ -3,14 +3,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.PickingPage"
-    Title="Picking"
-    Shell.BackgroundColor="{StaticResource BrandBlue}"
-    Shell.ForegroundColor="White"
-    Shell.TitleColor="White">
+    xmlns:components="clr-namespace:Handheld.Components.Bars"    
+    Shell.NavBarIsVisible="False">
 
 
-    <Grid RowDefinitions="Auto,*"
+    <Grid RowDefinitions="Auto,Auto,*"
       BackgroundColor="White">
+
+        <!--  CUSTOM BAR -->
+        <components:Bar
+        Grid.Row="0"
+        Title="Picking"
+        MenuCommand="{Binding OpenMenuCommand}" />
 
 
 
@@ -18,6 +22,7 @@
         <!-- FILTER BAR -->
         <!-- ===================== -->
         <Entry
+            Grid.Row="1"
             x:Name="SearchEntry"
             Text="{Binding SearchText}"
             Placeholder="Buscar ..."
@@ -34,7 +39,7 @@
         <!-- ===================== -->
         <!-- CONTENT -->
         <!-- ===================== -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <!-- LOADING -->
             <ActivityIndicator

@@ -43,7 +43,7 @@ namespace Handheld
 #if ANDROID
                     client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-                    client.BaseAddress = new Uri("https://localhost:7216/");
+                    client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
                 });
 
@@ -63,7 +63,7 @@ namespace Handheld
 #if ANDROID
                     client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-                    client.BaseAddress = new Uri("https://localhost:7216/");
+                    client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
                 });
 
@@ -83,7 +83,7 @@ namespace Handheld
 #if ANDROID
                     client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-                    client.BaseAddress = new Uri("https://localhost:7216/");
+                    client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
                 });
 
@@ -104,7 +104,7 @@ namespace Handheld
 #if ANDROID
         client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-        client.BaseAddress = new Uri("https://localhost:7216/");
+        client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
     });
 
@@ -124,7 +124,7 @@ namespace Handheld
 #if ANDROID
         client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-        client.BaseAddress = new Uri("https://localhost:7216/");
+        client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
     });
 
@@ -145,7 +145,7 @@ namespace Handheld
 #if ANDROID
         client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-        client.BaseAddress = new Uri("https://localhost:7216/");
+        client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
     });
 
@@ -165,7 +165,7 @@ namespace Handheld
 #if ANDROID
         client.BaseAddress = new Uri("http://10.0.2.2:5261/");   ///10.0.2.2
 #else
-        client.BaseAddress = new Uri("https://localhost:7216/");
+        client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
     });
             builder.Services.AddHttpClient<ReceivingLineService>()
@@ -184,7 +184,7 @@ namespace Handheld
 #if ANDROID
         client.BaseAddress = new Uri("http://10.0.2.2:5261/");
 #else
-        client.BaseAddress = new Uri("https://localhost:7216/");
+        client.BaseAddress = new Uri("https://localhost:5261/");
 #endif
     });
 

@@ -1,5 +1,6 @@
 ﻿using Handheld.Models;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace Handheld.Services;
 
@@ -52,5 +53,20 @@ public class ShipmentLineService
             .ReadFromJsonAsync<PagedResponse<ShipmentLineDto>>();
 
         return result ?? new PagedResponse<ShipmentLineDto>();
+    }
+
+    public async Task<bool> PostShipmentAsync(string companyId, string shipmentId)
+    {
+        var endpoint = $"api/shipmentheaders/{shipmentId}/post?companyId={Uri.EscapeDataString(companyId)}";
+
+        var response = await _http.PostAsync(endpoint, null);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            throw new Exception($"POST ERROR: {error}");
+        }
+
+        return true;
     }
 }

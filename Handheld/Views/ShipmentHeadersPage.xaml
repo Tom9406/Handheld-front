@@ -2,130 +2,108 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:Handheld.Components.Bars"
     x:Class="Handheld.Views.ShipmentHeadersPage"
     Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*"
+          BackgroundColor="White">
 
-        <!-- TOP BAR -->
-        <Grid
+        <!--  CUSTOM BAR -->
+        <components:Bar
             Grid.Row="0"
-            BackgroundColor="{StaticResource BrandBlue}"
-            HeightRequest="64"
-            Padding="12"
-            ColumnDefinitions="Auto,*">
+            Title="Shipments"
+            MenuCommand="{Binding OpenMenuCommand}" />
 
-            <Label
-                Text="☰"
-                FontSize="22"
-                TextColor="White"
-                VerticalOptions="Center"/>
+        <!--  SEARCH -->
+        <Entry
+            x:Name="SearchEntry"
+            Grid.Row="1"
+            Text="{Binding SearchText}"
+            ReturnCommand="{Binding SearchCommand}"
+            ReturnType="Search"
+            Placeholder="Buscar shipment..."
+            Margin="4"
+            BackgroundColor="White"
+            PlaceholderColor="Black"
+            TextColor="Black" />
 
+        <!--  RESULT AREA -->
+        <Grid Grid.Row="2">
+
+            <!-- LOADING -->
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- NO DATA -->
             <Label
-                Grid.Column="1"
-                Text="Shipments"
+                Text="No hay datos"
+                IsVisible="{Binding IsEmpty}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                FontSize="22"
-                FontAttributes="Bold"
-                TextColor="White"/>
-        </Grid>
+                FontAttributes="Italic"
+                TextColor="Black"/>
 
-        <!-- CONTENT -->
-        <Grid Grid.Row="1" RowDefinitions="Auto,*"
-              BackgroundColor="White">
+            <!-- LIST -->
+            <CollectionView
+                ItemsSource="{Binding Items}"
+                IsVisible="{Binding HasData}"
+                SelectionMode="Single"
+                SelectionChanged="OnSelectionChanged"
+                BackgroundColor="White">
 
-            <!-- SEARCH -->
-            <Entry
-                x:Name="SearchEntry"
-                Grid.Row="0"
-                Text="{Binding SearchText}"
-                ReturnCommand="{Binding SearchCommand}"
-                ReturnType="Search"
-                Placeholder="Buscar shipment..."
-                Margin="2"
-                BackgroundColor="White"
-                PlaceholderColor="Black"
-                TextColor="Black" />
+                <!-- HEADER -->
+                <CollectionView.Header>
+                    <Grid BackgroundColor="#E5E7EB"
+                          ColumnDefinitions="1.5*,2*,1.5*">
 
-            <!-- RESULT AREA -->
-            <Grid Grid.Row="1">
+                        <Label Text="Shipment"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
 
-                <!-- LOADING -->
-                <ActivityIndicator
-                    IsRunning="{Binding IsLoading}"
-                    IsVisible="{Binding IsLoading}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="Customer"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
 
-                <!-- NO DATA -->
-                <Label
-                    Text="No hay datos"
-                    IsVisible="{Binding IsEmpty}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    FontAttributes="Italic"
-                    TextColor="Black"/>
+                        <Label Grid.Column="2"
+                               Text="Status"
+                               Padding="8"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
+                    </Grid>
+                </CollectionView.Header>
 
-                <!-- LIST -->
-                <CollectionView
-                    ItemsSource="{Binding Items}"
-                    IsVisible="{Binding HasData}"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged"
-                    BackgroundColor="White">
+                <!-- ITEMS -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="8"
+                              ColumnDefinitions="1.5*,2*,1.5*">
 
-                    <!-- HEADER -->
-                    <CollectionView.Header>
-                        <Grid BackgroundColor="#E5E7EB"
-                              ColumnDefinitions="2*,2*,1*">
-
-                            <Label Text="Shipment"
-                                   Padding="8"
-                                   FontAttributes="Bold"
+                            <Label Text="{Binding ShipmentNo}"
                                    TextColor="Black"/>
 
                             <Label Grid.Column="1"
-                                   Text="Customer"
-                                   Padding="8"
-                                   FontAttributes="Bold"
+                                   Text="{Binding CustomerName}"
                                    TextColor="Black"/>
 
                             <Label Grid.Column="2"
-                                   Text="Lines"
-                                   Padding="8"
-                                   FontAttributes="Bold"
+                                   Text="{Binding ShipmentStatus}"
                                    HorizontalTextAlignment="Center"
                                    TextColor="Black"/>
                         </Grid>
-                    </CollectionView.Header>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-                    <!-- ROW TEMPLATE -->
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="8"
-                                  ColumnDefinitions="2*,2*,1*">
-
-                                <Label Text="{Binding ShipmentNo}"
-                                       
-                                       TextColor="Black"/>
-
-                                <Label Grid.Column="1"
-                                       Text="{Binding CustomerName}" 
-                                       TextColor="Black"/>
-
-                                <Label Grid.Column="2"
-                                       Text="{Binding TotalLines}"
-                                       HorizontalTextAlignment="Center"                                       
-                                       TextColor="Black"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-
-                </CollectionView>
-
-            </Grid>
+            </CollectionView>
 
         </Grid>
+
     </Grid>
 </ContentPage>

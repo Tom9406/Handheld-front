@@ -3,17 +3,21 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.ReceivingLinesPage"
-    Title="Receiving Lines"
-    Shell.BackgroundColor="{StaticResource BrandBlue}"
-    Shell.ForegroundColor="White"
-    Shell.TitleColor="White">
+    xmlns:components="clr-namespace:Handheld.Components.Bars"
+Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*"
+    <Grid RowDefinitions="Auto,Auto,*"
           BackgroundColor="White">
+
+        <!--  CUSTOM BAR -->
+        <components:Bar
+            Grid.Row="0"
+            Title="Receiving Lines"
+            MenuCommand="{Binding PostCommand}" />  
 
         <!-- SEARCH -->
         <Entry
-            Grid.Row="0"
+            Grid.Row="1"
             Text="{Binding SearchText, Mode=TwoWay}"
             ReturnType="Search"
             Placeholder="Buscar línea..."
@@ -23,7 +27,7 @@
             TextColor="Black" />
 
         <!-- RESULT AREA -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <!-- LOADING -->
             <ActivityIndicator
@@ -90,7 +94,7 @@
                                    TextColor="Black"/>
 
                             <Label Grid.Column="2"
-                                   Text="{Binding QuantityReceived}"
+                                   Text="{Binding PostedQuantityReceived}"
                                    HorizontalTextAlignment="Center"
                                    TextColor="Black"/>
                         </Grid>

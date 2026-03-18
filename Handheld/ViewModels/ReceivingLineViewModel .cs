@@ -11,9 +11,9 @@ namespace Handheld.ViewModels
         private readonly ReceivingLineService _receivingLineService;
 
         // Igual que en Shipment, lo estás dejando fijo
-        private static readonly Guid CompanyId =
-            Guid.Parse("FC73E7BF-C62D-48FF-AC17-18244D67DFE4");
+        private static readonly string CompanyId = "FC73E7BF-C62D-48FF-AC17-18244D67DFE4";
 
+        private bool _isPosting;
         private Guid _receivingHeaderId;
         public Guid ReceivingHeaderId
         {
@@ -21,13 +21,13 @@ namespace Handheld.ViewModels
             set => SetProperty(ref _receivingHeaderId, value);
         }
 
-        // 🔹 Lista completa
+        // Lista completa
         private List<ReceivingLineDto> _allLines = new();
 
-        // 🔹 Lista visible
+        // Lista visible
         public ObservableCollection<ReceivingLineDto> Lines { get; } = new();
 
-        // 🔹 Búsqueda
+        // Búsqueda
         private string _searchText;
         public string SearchText
         {
@@ -43,12 +43,14 @@ namespace Handheld.ViewModels
         public override bool IsEmpty => !IsLoading && !HasError && !HasData;
 
         public ICommand LoadCommand { get; }
+        public ICommand PostCommand { get; }
 
         public ReceivingLineViewModel(ReceivingLineService receivingLineService)
         {
             _receivingLineService = receivingLineService;
 
             LoadCommand = new Command(async () => await LoadAsync());
+            PostCommand = new Command(async () => await PostAsync());
 
             Lines.CollectionChanged += (_, __) =>
             {
@@ -129,6 +131,39 @@ namespace Handheld.ViewModels
             Lines.Clear();
             foreach (var line in filtered)
                 Lines.Add(line);
+        }
+
+        private async Task PostAsync()
+        {
+            if (_isPosting) return;
+
+
+
+            try
+            {
+                _isPosting = true;
+                IsLoading = true;
+
+                bool success = await _receivingLineService.PostReceiptAsync(
+                    CompanyId,
+                    ReceivingHeaderId
+                );
+
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("OK", "Receipt Posted", "OK");
+                    await LoadAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                _isPosting = false;
+                IsLoading = false;
+            }
         }
     }
 }

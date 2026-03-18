@@ -83,6 +83,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Components\Bars\Bar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Components\Cards\Card.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

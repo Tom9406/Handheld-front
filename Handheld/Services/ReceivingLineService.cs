@@ -32,4 +32,21 @@ public class ReceivingLineService
 
         return result?.Data ?? new List<ReceivingLineDto>();
     }
+
+    public async Task<bool> PostReceiptAsync(string companyId, Guid receivingId)
+    {
+        var endpoint = $"api/ReceivingHeaders/{receivingId}/post?companyId={Uri.EscapeDataString(companyId)}";
+
+        var response = await _http.PostAsync(endpoint, null);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            throw new Exception($"POST ERROR: {error}");
+        }
+
+        return true;
+    }
+
+
 }

@@ -8,7 +8,7 @@ namespace Handheld.Views;
 public partial class ShipmentLinesPage : ContentPage
 {
     private readonly ShipmentLineViewModel _viewModel;
-    private bool _loaded; // bandera
+    private bool _loaded;
 
     public string ShipmentId
     {

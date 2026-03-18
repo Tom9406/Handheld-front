@@ -28,7 +28,7 @@
         <Grid
             Grid.Row="1"
             Padding="16"
-            RowDefinitions="Auto,Auto,Auto"
+            RowDefinitions="Auto,Auto,Auto,Auto"
             ColumnDefinitions="*,*"
             RowSpacing="12"
             ColumnSpacing="12"
@@ -50,13 +50,23 @@
                    Text="{Binding OrderedQty}"
                    TextColor="Black" />
 
-            <!-- Ship Qty -->
+            <!-- Posted Qty -->
             <Label Grid.Row="2"
+                   Text="Posted Qty:"
+                   FontAttributes="Bold"
+                   TextColor="Black"/>
+                    <Label Grid.Row="2"
+                   Grid.Column="1"
+                   Text="{Binding AlreadyPosted}" 
+                   TextColor="Black" /> 
+
+            <!-- Ship Qty -->
+            <Label Grid.Row="3"
                    Text="Ship Qty:"
                    FontAttributes="Bold"
                    TextColor="Black" />
             <Entry
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 Keyboard="Numeric"
                 Text="{Binding QtyToAdd}"

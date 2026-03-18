@@ -1,31 +1,34 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Views.ItemInquiryPage"
-    Title="Item Inquiry"   
-    Shell.BackgroundColor="{StaticResource BrandBlue}"
-    Shell.ForegroundColor="White"
-    Shell.TitleColor="White">
+    xmlns:components="clr-namespace:Handheld.Components.Bars"    
+    Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*"
+    <Grid RowDefinitions="Auto,Auto,*"
           BackgroundColor="White">
 
-        <!-- SEARCH -->
-        <Entry
+        <!--  CUSTOM BAR -->
+        <components:Bar
             Grid.Row="0"
+            Title="Item Inquiry"
+            MenuCommand="{Binding OpenMenuCommand}" />
+
+        <!--  SEARCH -->
+        <Entry
+            Grid.Row="1"
             x:Name="SearchEntry"
             Text="{Binding SearchText}"
             ReturnCommand="{Binding SearchCommand}"
             ReturnType="Search"
             Placeholder="Buscar ..."
-            Margin="2"
+            Margin="4"
             BackgroundColor="White" 
             PlaceholderColor="Black"
             TextColor="Black"/>
 
-        <!-- RESULT AREA -->
-        <Grid Grid.Row="1">
+        <!--  RESULT AREA -->
+        <Grid Grid.Row="2">
 
             <!-- LOADING -->
             <ActivityIndicator
@@ -47,8 +50,11 @@
             <CollectionView
                 ItemsSource="{Binding Items}"
                 IsVisible="{Binding HasData}"
+                RemainingItemsThreshold="5"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
                 SelectionMode="None">
 
+                <!-- HEADER -->
                 <CollectionView.Header>
                     <Grid BackgroundColor="#E5E7EB"
                           ColumnDefinitions="3*,1.5*,1*,1*">
@@ -59,12 +65,12 @@
                     </Grid>
                 </CollectionView.Header>
 
+                <!-- ITEMS -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="8" ColumnDefinitions="3*,1.5*,1*,1*">
 
-                            <Label Text="{Binding ItemNo}" 
-                                   TextColor="Black"/>
+                            <Label Text="{Binding ItemNo}" TextColor="Black"/>
 
                             <Label Grid.Column="1"
                                    Text="{Binding BinCode}"
@@ -73,7 +79,6 @@
 
                             <Label Grid.Column="2"
                                    Text="{Binding StockQty}"
-                                   
                                    HorizontalTextAlignment="Center"
                                    TextColor="Black"/>
 

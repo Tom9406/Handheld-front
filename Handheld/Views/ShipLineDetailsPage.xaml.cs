@@ -30,6 +30,8 @@ public partial class ShipLineDetailsPage : ContentPage, INotifyPropertyChanged
 
     public decimal AlreadyShipped => Line?.ShippedQty ?? 0;
 
+    public decimal AlreadyPosted => Line?.AlreadyPostedQty ?? 0;
+
     public ShipmentLineDto Line
     {
         get => _line;
@@ -45,6 +47,7 @@ public partial class ShipLineDetailsPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged(nameof(ItemNo));
             OnPropertyChanged(nameof(OrderedQty));
             OnPropertyChanged(nameof(AlreadyShipped));
+            OnPropertyChanged(nameof(AlreadyPosted));
         }
     }
 
