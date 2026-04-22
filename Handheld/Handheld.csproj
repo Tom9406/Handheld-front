@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<!-- Plataforma -->
 		<TargetFramework>net8.0-android</TargetFramework>
+		<MauiVersion>8.0.100</MauiVersion>
 
 		<!-- MAUI -->
 		<UseMaui>true</UseMaui>
