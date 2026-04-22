@@ -137,8 +137,6 @@ namespace Handheld.ViewModels
         {
             if (_isPosting) return;
 
-
-
             try
             {
                 _isPosting = true;

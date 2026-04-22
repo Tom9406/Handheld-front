@@ -15,8 +15,8 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0"
-        Text="☰"
-        Clicked="OnMenuClicked"
+        Text="{Binding Icon, Source={x:Reference Root}}"
+        Clicked="OnLeftClicked"
         BackgroundColor="Transparent"
         TextColor="White"
         FontSize="22"/>

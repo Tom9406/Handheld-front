@@ -1,0 +1,21 @@
+# .NET / MAUI
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test packages generated locally
+TestBuilds/
+*.apk
+*.aab
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Unrelated nested project copy
+front/

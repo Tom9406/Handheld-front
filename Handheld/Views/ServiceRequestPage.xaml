@@ -1,0 +1,85 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.ServiceRequestPage"
+    Title="Solicitar servicio"
+    BackgroundColor="{StaticResource PageBackground}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="back_outline.svg"
+                     Clicked="OnCancelClicked"
+                     Priority="0"
+                     Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="18,16,18,28" Spacing="16">
+            <Border Style="{StaticResource HeroBorderStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding Name}"
+                           Style="{StaticResource HeroTitleStyle}" />
+                    <Label Text="{Binding Category, StringFormat='Categoria: {0}'}"
+                           Style="{StaticResource HeroSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Resumen del servicio"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding Description}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding EstimatedTimeText, StringFormat='Tiempo estimado: {0}'}"
+                           Style="{StaticResource CaptionLabelStyle}" />
+                    <Label Text="{Binding Price, StringFormat='Costo referencial: Gs {0:N0}'}"
+                           TextColor="{StaticResource BrandLeaf}"
+                           FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}"
+                    IsVisible="{Binding PermiteAdjunto}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Adjunto del servicio"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="Adjunta un PDF o imagen relacionada con el tramite."
+                           Style="{StaticResource CaptionLabelStyle}" />
+                    <Button Text="Seleccionar archivo"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Clicked="OnPickFileClicked" />
+                    <Label Text="{Binding FileName}"
+                           Style="{StaticResource CaptionLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Comprobante de pago"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="Adjunta una foto o captura de la transferencia para procesar tu solicitud."
+                           Style="{StaticResource CaptionLabelStyle}" />
+                    <Label Text="Alias: CELULAR"
+                           Style="{StaticResource CaptionLabelStyle}" />
+                    <Label Text="Numero: 123456789"
+                           Style="{StaticResource CaptionLabelStyle}" />
+                    <Button Text="Seleccionar comprobante"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Clicked="OnPickPaymentFileClicked" />
+                    <Label Text="{Binding PaymentFileName}"
+                           Style="{StaticResource CaptionLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="Solicitar servicio"
+                        Clicked="OnRequestClicked" />
+                <Button Grid.Column="1"
+                        Text="Cancelar"
+                        Style="{StaticResource DangerButtonStyle}"
+                        Clicked="OnCancelClicked" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

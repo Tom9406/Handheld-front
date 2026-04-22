@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Handheld.ViewModels.Base
@@ -7,7 +7,21 @@ namespace Handheld.ViewModels.Base
     {
         bool isLoading;
         bool hasError;
-        string errorMessage;
+        string errorMessage = string.Empty;
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsLoading
         {
@@ -39,13 +53,12 @@ namespace Handheld.ViewModels.Base
             set => SetProperty(ref errorMessage, value);
         }
 
-        // 🔹 Propiedad virtual para que los hijos puedan usarla
         public virtual bool IsEmpty => false;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
+            [CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(
                 this,
@@ -55,7 +68,7 @@ namespace Handheld.ViewModels.Base
         protected bool SetProperty<T>(
             ref T backingStore,
             T value,
-            [CallerMemberName] string propertyName = null)
+            [CallerMemberName] string? propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
                 return false;

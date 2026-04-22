@@ -14,8 +14,8 @@
 		<Nullable>enable</Nullable>
 
 		<!-- App -->
-		<ApplicationTitle>Handheld</ApplicationTitle>
-		<ApplicationId>com.companyname.handheld</ApplicationId>
+		<ApplicationTitle>ServiciosYa</ApplicationTitle>
+		<ApplicationId>com.serviciosya.handheld</ApplicationId>
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
@@ -29,7 +29,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.png" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#FFFFFF" BaseSize="1024,1024" />
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#FFFFFF" BaseSize="1280,720" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -45,6 +45,24 @@
 
 	<ItemGroup>
 	  <AndroidResource Remove="Platforms\Android\Resources\xml\network_security_config.Designer.xml" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Remove="Models\ItemInquiryDto.cs" />
+	  <Compile Remove="Services\ItemService.cs" />
+	  <Compile Remove="Services\MovementsService.cs" />
+	  <Compile Remove="Services\PickService.cs" />
+	  <Compile Remove="Services\ReceivingLineService.cs" />
+	  <Compile Remove="Services\ReceivingService.cs" />
+	  <Compile Remove="Services\ShipmentLineService.cs" />
+	  <Compile Remove="Services\ShipmentService.cs" />
+	  <Compile Remove="ViewModels\InventoryMovementsViewModel.cs" />
+	  <Compile Remove="ViewModels\ItemInquiryViewModel.cs" />
+	  <Compile Remove="ViewModels\PickHeadersViewModel.cs" />
+	  <Compile Remove="ViewModels\ReceivingHeadersViewModel.cs" />
+	  <Compile Remove="ViewModels\ReceivingLineViewModel .cs" />
+	  <Compile Remove="ViewModels\ShipmentLineViewModel.cs" />
 	</ItemGroup>
 
 
@@ -73,6 +91,9 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\MyRequestsPage.xaml.cs">
+	    <DependentUpon>MyRequestsPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,43 +110,34 @@
 	  <MauiXaml Update="Components\Cards\Card.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AboutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ChangePasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ViewModels\MainModel.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ItemInquiryPage.xaml">
+	  <MauiXaml Update="Views\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MovementsPage.xaml">
+	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PickingPage.xaml">
+	  <MauiXaml Update="Views\MyRequestDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Picking_Line_Details.xaml">
+	  <MauiXaml Update="Views\MyRequestsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PICKING_TAKE.xaml">
+	  <MauiXaml Update="Views\ServicePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ReceivingLineDetails.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ReceivingLinesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ReceivingPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\RegisterCompanyPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ShipLineDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ShipmentHeadersPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ShipmentLinesPage.xaml">
+	  <MauiXaml Update="Views\ServiceRequestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

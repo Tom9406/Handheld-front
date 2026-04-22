@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.RegisterPage"
+    Title="Crear cuenta"
+    BackgroundColor="{StaticResource PageBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,28,24,32" Spacing="16">
+            <Label Text="Crea tu cuenta"
+                   Style="{StaticResource TitleLabelStyle}" />
+            <Label Text="Registrate para solicitar servicios dentro de ServiciosYa."
+                   Style="{StaticResource SubtitleLabelStyle}" />
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="14">
+                    <Entry Placeholder="Usuario"
+                           Text="{Binding Username}" />
+                    <Entry Placeholder="Nombre"
+                           Text="{Binding FirstName}" />
+                    <Entry Placeholder="Apellido"
+                           Text="{Binding LastName}" />
+                    <Entry Placeholder="Telefono"
+                           Keyboard="Telephone"
+                           Text="{Binding Phone}" />
+                    <Entry Placeholder="Correo"
+                           Keyboard="Email"
+                           Text="{Binding Email}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Al registrarte, tu cuenta se crea con password temporal 123456."
+                           Style="{StaticResource CaptionLabelStyle}" />
+                    <Label Text="La app te obligara a cambiarla en el primer acceso."
+                           Style="{StaticResource CaptionLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Crear cuenta"
+                    Command="{Binding RegisterCommand}" />
+            <Button Text="Volver al login"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Command="{Binding BackToLoginCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

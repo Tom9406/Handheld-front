@@ -1,0 +1,71 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.MyRequestDetails"
+    Title="Detalle de solicitud"
+    BackgroundColor="{StaticResource PageBackground}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="back_outline.svg"
+                     Clicked="OnBackClicked"
+                     Priority="0"
+                     Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="18,16,18,28" Spacing="16">
+            <Border Style="{StaticResource HeroBorderStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding ServiceName}"
+                           Style="{StaticResource HeroTitleStyle}" />
+                    <Label Text="{Binding Status, StringFormat='Estado: {0}'}"
+                           Style="{StaticResource HeroSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Pago y seguimiento"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding PaymentStatus, StringFormat='Pago: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding UpdatedAt, StringFormat='Última actualización: {0:dd/MM/yyyy HH:mm}'}"
+                           Style="{StaticResource CaptionLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Servicio"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding Category, StringFormat='Categoría: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding EstimatedTimeText, StringFormat='Tiempo estimado: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding Price, StringFormat='Precio: Gs {0:N0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Tus datos"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding FirstName, StringFormat='Nombre: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding LastName, StringFormat='Apellido: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding Phone, StringFormat='Teléfono: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding Email, StringFormat='Correo: {0}'}"
+                           Style="{StaticResource BodyLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Cancelar solicitud"
+                    Style="{StaticResource DangerButtonStyle}"
+                    IsVisible="{Binding CanCancel}"
+                    Clicked="OnCancelClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

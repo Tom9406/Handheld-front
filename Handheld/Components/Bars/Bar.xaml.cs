@@ -1,12 +1,11 @@
-﻿using System.Windows.Input;
-
-namespace Handheld.Components.Bars;
+﻿namespace Handheld.Components.Bars;
 
 public partial class Bar : ContentView
 {
     public Bar()
     {
         InitializeComponent();
+        Icon = "←"; // siempre flecha
     }
 
     // TITLE
@@ -23,49 +22,23 @@ public partial class Bar : ContentView
         set => SetValue(TitleProperty, value);
     }
 
-    // 👉 OPCIONAL (puedes eliminarlo si no lo usas)
-    public static readonly BindableProperty MenuCommandProperty =
+    // ICONO (ya lo estás usando en XAML)
+    public static readonly BindableProperty IconProperty =
         BindableProperty.Create(
-            nameof(MenuCommand),
-            typeof(ICommand),
+            nameof(Icon),
+            typeof(string),
             typeof(Bar),
-            default(ICommand));
+            "←");
 
-    public ICommand MenuCommand
+    public string Icon
     {
-        get => (ICommand)GetValue(MenuCommandProperty);
-        set => SetValue(MenuCommandProperty, value);
+        get => (string)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
     }
 
-    //  CLAVE: abrir menú SIEMPRE
-    private async void OnMenuClicked(object sender, EventArgs e)
+    // CLICK IZQUIERDA = BACK
+    private async void OnLeftClicked(object sender, EventArgs e)
     {
-        string action = await Application.Current.MainPage.DisplayActionSheet(
-            "Options",
-            "Cancel",
-            null,
-            "🆕 CREATE DOCUMENT",
-            "✅ POST DOCUMENT",
-            "🧹 CLEAR",
-            "❌ CLOSE"
-        );
-
-        switch (action)
-        {
-            case "🆕 CREATE DOCUMENT":
-                // opcional
-                break;
-
-            case "✅ POST DOCUMENT":
-                if (MenuCommand?.CanExecute(null) == true)
-                    MenuCommand.Execute(null);
-                break;
-
-            case "🧹 CLEAR":
-                break;
-
-            case "❌ CLOSE":
-                break;
-        }
+        await Shell.Current.GoToAsync("..");
     }
 }

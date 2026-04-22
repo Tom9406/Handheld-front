@@ -1,16 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Brand -->
-    <Color x:Key="BrandPurple">#5B2D8B</Color>
-    <Color x:Key="BrandBlue">#1E3A8A</Color>
-    <Color x:Key="BrandBlueLight">#2563EB</Color>
+    <Color x:Key="BrandOcean">#1385B6</Color>
+    <Color x:Key="BrandTeal">#1AB7AF</Color>
+    <Color x:Key="BrandLeaf">#6AC64A</Color>
+    <Color x:Key="BrandInk">#0A4E73</Color>
+    <Color x:Key="BrandViolet">#6D4DD7</Color>
 
-    <!-- Cards -->
+    <Color x:Key="PageBackground">#F4FAFB</Color>
     <Color x:Key="CardBackground">#FFFFFF</Color>
-    <Color x:Key="PageBackground">#F4F6FA</Color>
-
-
+    <Color x:Key="SurfaceAlt">#EAF6F7</Color>
+    <Color x:Key="TextPrimary">#0C3551</Color>
+    <Color x:Key="TextSecondary">#5D7688</Color>
+    <Color x:Key="BorderSoft">#CFE4E8</Color>
+    <Color x:Key="Danger">#D94E4E</Color>
+    <Color x:Key="Success">#2FA36B</Color>
+    <Color x:Key="White">#FFFFFF</Color>
 </ResourceDictionary>

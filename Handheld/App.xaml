@@ -5,23 +5,10 @@
 
     <Application.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="ContentPage">
-                <Setter Property="Shell.BackgroundColor"
-                    Value="{StaticResource BrandBlue}" />
-                <Setter Property="Shell.ForegroundColor"
-                    Value="White" />
-                <Setter Property="Shell.TitleColor"
-                    Value="White" />
-            </Style>
-
-
         </ResourceDictionary>
     </Application.Resources>
-
-
 </Application>

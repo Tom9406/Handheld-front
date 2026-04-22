@@ -5,40 +5,35 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Handheld.Components.Cards.CardView">
 
-    <!-- Contenedor de la card -->
     <Frame
         BackgroundColor="{StaticResource CardBackground}"
         CornerRadius="20"
         HasShadow="True"
         Padding="16">
 
-        <!-- Click / Tap -->
         <Frame.GestureRecognizers>
             <TapGestureRecognizer
                 Command="{Binding Command, Source={x:Reference Root}}"
                 CommandParameter="{Binding CommandParameter, Source={x:Reference Root}}" />
         </Frame.GestureRecognizers>
 
-        <!-- Contenido -->
         <VerticalStackLayout
             Spacing="8"
             HorizontalOptions="Center"
             VerticalOptions="Center">
 
-            <!-- Icono -->
-            <Label
-                Text="{Binding Icon, Source={x:Reference Root}}"
-                FontSize="32"
-                HorizontalOptions="Center"/>
+            <Image
+                Source="{Binding Icon, Source={x:Reference Root}}"
+                WidthRequest="42"
+                HeightRequest="42"
+                HorizontalOptions="Center" />
 
-            <!-- Título -->
             <Label
                 Text="{Binding Title, Source={x:Reference Root}}"
-                FontSize="10"
+                FontSize="16"
                 FontAttributes="Bold"
                 HorizontalTextAlignment="Center"
-                TextColor="Black"/>
-
+                TextColor="{StaticResource TextPrimary}" />
         </VerticalStackLayout>
     </Frame>
 </ContentView>

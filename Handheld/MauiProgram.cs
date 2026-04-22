@@ -2,93 +2,31 @@
 using Handheld.ViewModels;
 using Handheld.Views;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
 
-namespace Handheld
+namespace Handheld;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
+        var builder = MauiApp.CreateBuilder();
 
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
 #if DEBUG
-            builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
-            // =========================
-            // API / SERVICES
-            // =========================
-            builder.Services.AddHttpClient<ItemService>()
-#if ANDROID
-                .ConfigurePrimaryHttpMessageHandler(() =>
-                {
-                    return new HttpClientHandler
-                    {
-                        ServerCertificateCustomValidationCallback =
-                            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                    };
-                })
-#endif
-                .ConfigureHttpClient(client =>
-                {
-#if ANDROID
-                    client.BaseAddress = new Uri("http://10.0.2.2:5261/");
-#else
-                    client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-                });
-
-            builder.Services.AddHttpClient<PickService>()
-#if ANDROID
-                .ConfigurePrimaryHttpMessageHandler(() =>
-                {
-                    return new HttpClientHandler
-                    {
-                        ServerCertificateCustomValidationCallback =
-                            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                    };
-                })
-#endif
-                .ConfigureHttpClient(client =>
-                {
-#if ANDROID
-                    client.BaseAddress = new Uri("http://10.0.2.2:5261/");
-#else
-                    client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-                });
-
-            builder.Services.AddHttpClient<InventoryMovementService>()
-#if ANDROID
-                .ConfigurePrimaryHttpMessageHandler(() =>
-                {
-                    return new HttpClientHandler
-                    {
-                        ServerCertificateCustomValidationCallback =
-                            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                    };
-                })
-#endif
-                .ConfigureHttpClient(client =>
-                {
-#if ANDROID
-                    client.BaseAddress = new Uri("http://10.0.2.2:5261/");
-#else
-                    client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-                });
-
-
-            builder.Services.AddHttpClient<ReceivingService>()
+        // =========================
+        // HTTP CLIENT
+        // =========================
+        builder.Services.AddHttpClient("ApiClient")
 #if ANDROID
     .ConfigurePrimaryHttpMessageHandler(() =>
     {
@@ -101,129 +39,38 @@ namespace Handheld
 #endif
     .ConfigureHttpClient(client =>
     {
+        client.Timeout = TimeSpan.FromSeconds(60);
 #if ANDROID
-        client.BaseAddress = new Uri("http://10.0.2.2:5261/");
+        var isEmulator = DeviceInfo.Current.DeviceType == DeviceType.Virtual;
+        client.BaseAddress = new Uri(isEmulator ? "https://10.0.2.2:7177/" : "https://192.168.100.61:7177/");
 #else
-        client.BaseAddress = new Uri("https://localhost:5261/");
+        client.BaseAddress = new Uri("https://localhost:7177/");
 #endif
     });
 
-            builder.Services.AddHttpClient<ShipmentService>()
-#if ANDROID
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback =
-                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-        };
-    })
-#endif
-    .ConfigureHttpClient(client =>
-    {
-#if ANDROID
-        client.BaseAddress = new Uri("http://10.0.2.2:5261/");
-#else
-        client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-    });
-
-
-            builder.Services.AddHttpClient<CompanyService>()
-#if ANDROID
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback =
-                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-        };
-    })
-#endif
-    .ConfigureHttpClient(client =>
-    {
-#if ANDROID
-        client.BaseAddress = new Uri("http://10.0.2.2:5261/");
-#else
-        client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-    });
-
-            builder.Services.AddHttpClient<ShipmentLineService>()
-#if ANDROID
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback =
-                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-        };
-    })
-#endif
-    .ConfigureHttpClient(client =>
-    {
-#if ANDROID
-        client.BaseAddress = new Uri("http://10.0.2.2:5261/");   ///10.0.2.2
-#else
-        client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-    });
-            builder.Services.AddHttpClient<ReceivingLineService>()
-#if ANDROID
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback =
-                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-        };
-    })
-#endif
-    .ConfigureHttpClient(client =>
-    {
-#if ANDROID
-        client.BaseAddress = new Uri("http://10.0.2.2:5261/");
-#else
-        client.BaseAddress = new Uri("https://localhost:5261/");
-#endif
-    });
-
-
-
-
-            // ========================= 
-            // VIEWMODELS
-            // =========================
-            builder.Services.AddTransient<ItemInquiryViewModel>();
-            builder.Services.AddTransient<PickHeadersViewModel>();
-            builder.Services.AddTransient<ReceivingHeadersViewModel>();
-            builder.Services.AddTransient<ShipmentHeadersViewModel>();
-            builder.Services.AddTransient<ShipmentLineViewModel>();
-            builder.Services.AddTransient<CompanyViewModel>();
-            builder.Services.AddTransient<InventoryMovementsViewModel>();
-            builder.Services.AddTransient<ReceivingLineViewModel>();
-
-
-
-
-            // =========================
-            // PAGES
-            // =========================
-            builder.Services.AddTransient<ItemInquiryPage>();
-            builder.Services.AddTransient<PickingPage>();
-            builder.Services.AddTransient<MovementsPage>();
-            builder.Services.AddTransient<ReceivingPage>();
-            builder.Services.AddTransient<ShipmentHeadersPage>();
-            builder.Services.AddTransient<ShipmentLinesPage>();
-            builder.Services.AddTransient<RegisterCompanyPage>();
-            builder.Services.AddTransient<ShipLineDetailsPage>();
-            builder.Services.AddTransient<ReceivingLinesPage>();
-            builder.Services.AddTransient<ReceivingLineDetailsPage>();
-
-
-
-
-            return builder.Build();
-        }
+        // =========================
+        // SERVICES
+        // =========================
+        builder.Services.AddSingleton<ApiService>();
+        builder.Services.AddSingleton<AuthService>();
+        builder.Services.AddSingleton<StorageService>();
+        builder.Services.AddSingleton<AppShell>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<RegisterPage>();
+        builder.Services.AddTransient<ChangePasswordViewModel>();
+        builder.Services.AddTransient<ChangePasswordPage>();
+        builder.Services.AddTransient<HomePage>();
+        builder.Services.AddTransient<AboutPage>();
+        builder.Services.AddSingleton<ServiceRequestsService>();
+        builder.Services.AddTransient<MyRequestsViewModel>();
+        builder.Services.AddTransient<MyRequestsPage>();
+        builder.Services.AddTransient<MyRequestDetails>();
+        builder.Services.AddSingleton<ServicesService>();
+        builder.Services.AddTransient<ServicesViewModel>();
+        builder.Services.AddTransient<ServicesPage>();
+        builder.Services.AddTransient<ServiceRequestPage>();
+        return builder.Build();
     }
 }

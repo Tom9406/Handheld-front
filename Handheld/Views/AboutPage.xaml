@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.AboutPage"
+    Title="Acerca de"
+    BackgroundColor="{StaticResource PageBackground}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="back_outline.svg"
+                     Clicked="OnBackClicked"
+                     Priority="0"
+                     Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,28,24,32" Spacing="16">
+            <Border Style="{StaticResource HeroBorderStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="ServiciosYa"
+                           Style="{StaticResource HeroTitleStyle}" />
+                    <Label Text="Tu pides, nosotros nos encargamos."
+                           Style="{StaticResource HeroSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Acerca de nosotros"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="ServiciosYa es una plataforma para gestionar servicios, seguimiento de solicitudes y atencion digital dentro del tenant actual."
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="Esta app te permite registrarte, solicitar servicios, adjuntar comprobantes, revisar estados y mantener trazabilidad de tus gestiones."
+                           Style="{StaticResource BodyLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

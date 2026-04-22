@@ -12,10 +12,7 @@ public class ReceivingService
         _http = http;
     }
 
-    public async Task<PagedResponse<ReceivingHeaderDto>> GetReceivingHeadersAsync(
-        string companyId,
-        int pageNumber,
-        int pageSize)
+    public async Task<PagedResponse<ReceivingHeaderDto>> GetReceivingHeadersAsync( string companyId,   int pageNumber,   int pageSize)
     {
         var url =
             $"api/ReceivingHeaders?" +
@@ -40,4 +37,18 @@ public class ReceivingService
             throw new Exception($"API Error: {error}");
         }
     }
+
+    public async Task<ReceivingLineDto> GetReceivingLineDetailAsync(Guid id)
+    {
+        var response = await _http.GetAsync($"api/receivinglines/{id}/detail");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            throw new Exception($"API Error: {error}");
+        }
+
+        return await response.Content.ReadFromJsonAsync<ReceivingLineDto>();
+    }
+
 }

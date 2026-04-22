@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.LoginPage"
+    BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,36,24,32" Spacing="18">
+            <Border Style="{StaticResource HeroBorderStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="ServiciosYa"
+                           Style="{StaticResource HeroTitleStyle}" />
+                    <Label Text="Tu pides, nosotros nos encargamos."
+                           Style="{StaticResource HeroSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Inicia sesion para continuar"
+                   Style="{StaticResource TitleLabelStyle}" />
+            <Label Text="Solicita, da seguimiento y gestiona tus servicios desde un solo lugar."
+                   Style="{StaticResource SubtitleLabelStyle}" />
+
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="14">
+                    <Entry Placeholder="Usuario"
+                           Text="{Binding Username}" />
+                    <Entry Placeholder="Contrasena"
+                           IsPassword="True"
+                           Text="{Binding Password}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Iniciar sesion"
+                    Command="{Binding LoginCommand}" />
+            <Button Text="Crear cuenta"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Command="{Binding GoToRegisterCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

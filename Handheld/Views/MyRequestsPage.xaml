@@ -1,0 +1,41 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Handheld.Views.MyRequestsPage"
+    Title="Mis solicitudes"
+    BackgroundColor="{StaticResource PageBackground}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="back_outline.svg"
+                     Clicked="OnBackClicked"
+                     Priority="0"
+                     Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout Padding="18,16,18,24" Spacing="14">
+        <Label Text="Mis solicitudes"
+               Style="{StaticResource TitleLabelStyle}" />
+        <SearchBar Placeholder="Buscar solicitudes..."
+                   Text="{Binding SearchText}" />
+
+        <CollectionView ItemsSource="{Binding Requests}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnItemSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource SurfaceBorderStyle}"
+                            Margin="0,0,0,12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding ServiceName}"
+                                   Style="{StaticResource SectionTitleStyle}" />
+                            <Label Text="{Binding Status, StringFormat='Estado: {0}'}"
+                                   Style="{StaticResource CaptionLabelStyle}" />
+                            <Label Text="{Binding PaymentStatus, StringFormat='Pago: {0}'}"
+                                   Style="{StaticResource CaptionLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

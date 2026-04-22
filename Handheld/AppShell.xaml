@@ -1,44 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <Shell
-    x:Class="Handheld.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Handheld.Views"
-    FlyoutBehavior="Flyout">
+    x:Class="Handheld.AppShell">
 
-    <!-- HOME -->
-    <FlyoutItem Title="Home" Route="home">
-        <ShellContent
-            ContentTemplate="{DataTemplate views:MainPage}" />
-    </FlyoutItem>
-
-    <!-- ITEMS -->
-    <FlyoutItem Title="Items" Route="items">
-        <ShellContent
-            ContentTemplate="{DataTemplate views:ItemInquiryPage}" />
-    </FlyoutItem>
-
-    <!-- RECEIVING -->
-    <FlyoutItem Title="Receiving" Route="receiving">
-        <ShellContent
-            ContentTemplate="{DataTemplate views:ReceivingPage}" />
-    </FlyoutItem>
-
-    <!-- SHIPMENTS -->
-    <FlyoutItem Title="Shipments" Route="shipments">
-        <ShellContent
-            ContentTemplate="{DataTemplate views:ShipmentHeadersPage}" />
-    </FlyoutItem>
-
-    <!-- Pick -->
-    <FlyoutItem Title="Picks" Route="picks">
-        <ShellContent
-        ContentTemplate="{DataTemplate views:PickingPage}" />
-    </FlyoutItem>
-
-    <!-- Movements -->
-    <FlyoutItem Title="Movements" Route="movements">
-        <ShellContent
-        ContentTemplate="{DataTemplate views:MovementsPage}" />
-    </FlyoutItem>
+    <ShellContent Route="login" ContentTemplate="{DataTemplate views:LoginPage}" />
+    <ShellContent Route="home" ContentTemplate="{DataTemplate views:HomePage}" />
+    <ShellContent Route="myrequests" ContentTemplate="{DataTemplate views:MyRequestsPage}" />
+    <ShellContent Route="services" ContentTemplate="{DataTemplate views:ServicesPage}" />
 
 </Shell>
