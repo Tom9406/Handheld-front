@@ -21,6 +21,10 @@
                            Text="{Binding FirstName}" />
                     <Entry Placeholder="Apellido"
                            Text="{Binding LastName}" />
+                    <Picker Title="Pais"
+                            ItemsSource="{Binding CountryOptions}"
+                            ItemDisplayBinding="{Binding DisplayName}"
+                            SelectedItem="{Binding SelectedCountry}" />
                     <Entry Placeholder="Telefono"
                            Keyboard="Telephone"
                            Text="{Binding Phone}" />

@@ -32,6 +32,24 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Border Style="{StaticResource SurfaceBorderStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Recordar mi sesion"
+                                   Style="{StaticResource SectionTitleStyle}" />
+                            <Label Text="{Binding SessionHint}"
+                                   Style="{StaticResource CaptionLabelStyle}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding RememberSession}" />
+                    </Grid>
+                    <Label Text="Acceso con huella: preparado para activar en una build firmada."
+                           Style="{StaticResource CaptionLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
             <Button Text="Iniciar sesion"
                     Command="{Binding LoginCommand}" />
             <Button Text="Crear cuenta"

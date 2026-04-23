@@ -60,22 +60,38 @@ public class ApiService
                 if (error.ValueKind == JsonValueKind.Object &&
                     error.TryGetProperty("message", out var message))
                 {
-                    return message.GetString() ?? "No se pudo completar la operacion.";
+                    return NormalizeErrorMessage(message.GetString());
                 }
 
                 if (error.ValueKind == JsonValueKind.String)
-                    return error.GetString() ?? "No se pudo completar la operacion.";
+                    return NormalizeErrorMessage(error.GetString());
             }
 
             if (root.TryGetProperty("message", out var rootMessage))
-                return rootMessage.GetString() ?? "No se pudo completar la operacion.";
+                return NormalizeErrorMessage(rootMessage.GetString());
         }
         catch
         {
             // If the payload is not JSON, show the original text.
         }
 
-        return payload;
+        return NormalizeErrorMessage(payload);
+    }
+
+    private static string NormalizeErrorMessage(string? message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return "No se pudo completar la operacion.";
+
+        if (message.Contains("Invalid credentials", StringComparison.OrdinalIgnoreCase))
+            return "Usuario o contrasena incorrectos.";
+
+        if (message.Contains("Connection failure", StringComparison.OrdinalIgnoreCase) ||
+            message.Contains("timed out", StringComparison.OrdinalIgnoreCase) ||
+            message.Contains("timeout", StringComparison.OrdinalIgnoreCase))
+            return "No se pudo conectar con el servidor. Verifica la red y que la API este activa.";
+
+        return message;
     }
 
     public async Task<T?> GetAsync<T>(string url)

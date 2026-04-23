@@ -13,7 +13,7 @@ public class AuthService
         _storage = storage;
     }
 
-    public async Task<AuthResponse?> Login(string username, string password)
+    public async Task<AuthResponse?> Login(string username, string password, bool rememberSession)
     {
         var response = await _apiService.PostAsync<AuthResponse>("api/auth/login", new
         {
@@ -24,7 +24,8 @@ public class AuthService
         if (response == null || string.IsNullOrWhiteSpace(response.Token))
             return null;
 
-        await _storage.SaveToken(response.Token);
+        await _storage.SaveToken(response.Token, rememberSession);
+        _storage.SaveLastUsername(username);
         return response;
     }
 
@@ -35,7 +36,7 @@ public class AuthService
         if (response == null || string.IsNullOrWhiteSpace(response.Token))
             return null;
 
-        await _storage.SaveToken(response.Token);
+        await _storage.SaveToken(response.Token, true);
         return response;
     }
 

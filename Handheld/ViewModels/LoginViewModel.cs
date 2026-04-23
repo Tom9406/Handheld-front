@@ -6,6 +6,7 @@ namespace Handheld.ViewModels;
 public class LoginViewModel : ViewModels.Base.BaseViewModel
 {
     private readonly AuthService _authService;
+    private readonly StorageService _storage;
 
     private string _username = string.Empty;
     public string Username
@@ -21,12 +22,31 @@ public class LoginViewModel : ViewModels.Base.BaseViewModel
         set => SetProperty(ref _password, value);
     }
 
+    private bool _rememberSession = true;
+    public bool RememberSession
+    {
+        get => _rememberSession;
+        set
+        {
+            if (SetProperty(ref _rememberSession, value))
+                OnPropertyChanged(nameof(SessionHint));
+        }
+    }
+
+    public string SessionHint =>
+        RememberSession
+            ? "Mantendremos tu sesion lista para la proxima vez."
+            : "Al cerrar la app, volveras a ingresar tus datos.";
+
     public ICommand LoginCommand { get; }
     public ICommand GoToRegisterCommand { get; }
 
-    public LoginViewModel(AuthService authService)
+    public LoginViewModel(AuthService authService, StorageService storage)
     {
         _authService = authService;
+        _storage = storage;
+        Username = _storage.GetLastUsername();
+        RememberSession = _storage.GetRememberSession();
         LoginCommand = new Command(async () => await Login());
         GoToRegisterCommand = new Command(async () => await Shell.Current.GoToAsync("register"));
     }
@@ -46,7 +66,7 @@ public class LoginViewModel : ViewModels.Base.BaseViewModel
         {
             IsBusy = true;
 
-            var response = await _authService.Login(Username.Trim(), Password);
+            var response = await _authService.Login(Username.Trim(), Password, RememberSession);
 
             if (response == null)
             {

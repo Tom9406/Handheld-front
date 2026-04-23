@@ -13,6 +13,20 @@ public class RegisterViewModel : ViewModels.Base.BaseViewModel
     public string LastName { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public List<CountryPhoneOption> CountryOptions { get; } = new()
+    {
+        new CountryPhoneOption("Paraguay", "+595", "PY"),
+        new CountryPhoneOption("Brasil", "+55", "BR"),
+        new CountryPhoneOption("Argentina", "+54", "AR"),
+        new CountryPhoneOption("Estados Unidos", "+1", "US")
+    };
+
+    private CountryPhoneOption? _selectedCountry;
+    public CountryPhoneOption? SelectedCountry
+    {
+        get => _selectedCountry;
+        set => SetProperty(ref _selectedCountry, value);
+    }
 
     public ICommand RegisterCommand { get; }
     public ICommand BackToLoginCommand { get; }
@@ -20,6 +34,7 @@ public class RegisterViewModel : ViewModels.Base.BaseViewModel
     public RegisterViewModel(AuthService authService)
     {
         _authService = authService;
+        SelectedCountry = CountryOptions[0];
         RegisterCommand = new Command(async () => await Register());
         BackToLoginCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
     }
@@ -39,6 +54,20 @@ public class RegisterViewModel : ViewModels.Base.BaseViewModel
             return;
         }
 
+        if (!IsValidEmail(Email.Trim()))
+        {
+            await Application.Current!.MainPage!.DisplayAlert("Correo invalido", "Ingresa un correo valido.", "OK");
+            return;
+        }
+
+        var normalizedPhone = NormalizePhone(Phone);
+
+        if (normalizedPhone.Length < 6 || normalizedPhone.Length > 15)
+        {
+            await Application.Current!.MainPage!.DisplayAlert("Telefono invalido", "Ingresa solo numeros y verifica la longitud del telefono.", "OK");
+            return;
+        }
+
         try
         {
             IsBusy = true;
@@ -48,7 +77,7 @@ public class RegisterViewModel : ViewModels.Base.BaseViewModel
                 Username = Username.Trim(),
                 FirstName = FirstName.Trim(),
                 LastName = LastName.Trim(),
-                Phone = Phone.Trim(),
+                Phone = $"{SelectedCountry?.DialCode}{normalizedPhone}",
                 Email = Email.Trim()
             });
 
@@ -63,11 +92,50 @@ public class RegisterViewModel : ViewModels.Base.BaseViewModel
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("Error", ex.Message, "OK");
+            await Application.Current!.MainPage!.DisplayAlert("No se pudo crear la cuenta", GetFriendlyError(ex), "OK");
         }
         finally
         {
             IsBusy = false;
         }
     }
+
+    private static bool IsValidEmail(string email)
+    {
+        try
+        {
+            var address = new System.Net.Mail.MailAddress(email);
+            return address.Address == email && email.Contains('.');
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static string NormalizePhone(string phone)
+    {
+        return new string(phone.Where(char.IsDigit).ToArray());
+    }
+
+    private static string GetFriendlyError(Exception ex)
+    {
+        if (ex.Message.Contains("Username ya registrado", StringComparison.OrdinalIgnoreCase))
+            return "El usuario ya esta registrado. Elige otro nombre de usuario.";
+
+        if (ex.Message.Contains("Email ya registrado", StringComparison.OrdinalIgnoreCase))
+            return "El correo ya esta registrado. Ingresa otro correo.";
+
+        if (ex.Message.Contains("Invalid credentials", StringComparison.OrdinalIgnoreCase))
+            return "Usuario o contrasena incorrectos.";
+
+        return string.IsNullOrWhiteSpace(ex.Message)
+            ? "Verifica los datos e intenta nuevamente."
+            : ex.Message;
+    }
+}
+
+public record CountryPhoneOption(string Name, string DialCode, string Code)
+{
+    public string DisplayName => $"{Name} ({DialCode})";
 }

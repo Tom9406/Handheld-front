@@ -14,9 +14,9 @@ public partial class AppShell : Shell
 
         Items.Add(CreateShellContent<LoginPage>("login"));
         Items.Add(CreateShellContent<HomePage>("home"));
-        Items.Add(CreateShellContent<MyRequestsPage>("myrequests"));
-        Items.Add(CreateShellContent<ServicesPage>("services"));
 
+        Routing.RegisterRoute("myrequests", new ServiceProviderRouteFactory<MyRequestsPage>(_services));
+        Routing.RegisterRoute("services", new ServiceProviderRouteFactory<ServicesPage>(_services));
         Routing.RegisterRoute("requestdetail", new ServiceProviderRouteFactory<MyRequestDetails>(_services));
         Routing.RegisterRoute("mynewrequest", new ServiceProviderRouteFactory<ServiceRequestPage>(_services));
         Routing.RegisterRoute("register", new ServiceProviderRouteFactory<RegisterPage>(_services));

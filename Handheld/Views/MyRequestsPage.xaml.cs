@@ -22,7 +22,7 @@ public partial class MyRequestsPage : ContentPage
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//home");
+        await Shell.Current.GoToAsync("..");
     }
     private async void OnItemSelected(object sender, SelectionChangedEventArgs e)
     {

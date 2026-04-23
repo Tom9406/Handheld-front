@@ -20,7 +20,14 @@ public partial class ServicesPage : ContentPage
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await _vm.LoadServicesByCategory(_category);
+                    try
+                    {
+                        await _vm.LoadServicesByCategory(_category);
+                    }
+                    catch
+                    {
+                        await DisplayAlert("No se pudieron cargar los servicios", "Verifica la conexion e intenta nuevamente.", "OK");
+                    }
                 });
             }
         }
@@ -34,7 +41,7 @@ public partial class ServicesPage : ContentPage
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//home");
+        await Shell.Current.GoToAsync("..");
     }
 
     private async void OnServiceSelected(object sender, SelectionChangedEventArgs e)
@@ -53,9 +60,9 @@ public partial class ServicesPage : ContentPage
 
             ((CollectionView)sender).SelectedItem = null;
         }
-        catch (Exception ex)
+        catch
         {
-            await DisplayAlert("ERROR", ex.ToString(), "OK");
+            await DisplayAlert("No se pudo abrir el servicio", "Intenta nuevamente en unos segundos.", "OK");
         }
     }
 }

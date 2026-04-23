@@ -80,7 +80,7 @@ public partial class MyRequestDetails : ContentPage
         {
             await _service.CancelRequest(_request.RequestID);
             await DisplayAlert("Listo", "La solicitud fue cancelada.", "OK");
-            await Shell.Current.GoToAsync("//myrequests");
+            await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)
         {

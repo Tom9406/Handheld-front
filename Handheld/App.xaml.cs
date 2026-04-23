@@ -12,8 +12,15 @@ public partial class App : Application
 
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            var token = await storage.GetToken();
-            await shell.GoToAsync(string.IsNullOrWhiteSpace(token) ? "//login" : "//home");
+            try
+            {
+                var token = await storage.GetToken();
+                await shell.GoToAsync(string.IsNullOrWhiteSpace(token) ? "//login" : "//home");
+            }
+            catch
+            {
+                await shell.GoToAsync("//login");
+            }
         });
     }
 }

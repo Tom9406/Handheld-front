@@ -14,7 +14,7 @@ public class HomeViewModel : BaseViewModel
     {
         Categories = new ObservableCollection<CategoryItem>
 {
-    new CategoryItem { Title = "Legales", Icon = "icon_documents.svg", Type = "services", BackendCategory = "DOCUMENTOS" },
+    new CategoryItem { Title = "Legales", Icon = "icon_documents.svg", Type = "services", BackendCategory = "Legales" },
     new CategoryItem { Title = "Compras", Icon = "icon_purchase.svg", Type = "services", BackendCategory = "COMPRAS" },
     new CategoryItem { Title = "Documentos", Icon = "icon_folder.svg", Type = "services", BackendCategory = "DOCUMENTOS" },
     new CategoryItem { Title = "Delivery", Icon = "icon_delivery.svg", Type = "services", BackendCategory = "DELIVERY" },
@@ -29,13 +29,13 @@ public class HomeViewModel : BaseViewModel
 
             if (item.Type == "historial")
             {
-                await Shell.Current.GoToAsync("//myrequests");
+                await Shell.Current.GoToAsync("myrequests");
                 return;
             }
 
             if (item.Type == "services")
             {
-                await Shell.Current.GoToAsync($"//services?category={item.BackendCategory}");
+                await Shell.Current.GoToAsync($"services?category={item.BackendCategory}");
                 return;
             }
         });

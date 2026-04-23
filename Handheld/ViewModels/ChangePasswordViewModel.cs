@@ -41,6 +41,15 @@ public class ChangePasswordViewModel : ViewModels.Base.BaseViewModel
             return;
         }
 
+        if (!IsStrongPassword(NewPassword))
+        {
+            await Application.Current!.MainPage!.DisplayAlert(
+                "Contrasena insegura",
+                "Usa minimo 8 caracteres, una mayuscula, un numero y un caracter especial.",
+                "OK");
+            return;
+        }
+
         try
         {
             IsBusy = true;
@@ -68,5 +77,13 @@ public class ChangePasswordViewModel : ViewModels.Base.BaseViewModel
         }
 
         await Shell.Current.GoToAsync("..");
+    }
+
+    private static bool IsStrongPassword(string password)
+    {
+        return password.Length >= 8
+            && password.Any(char.IsUpper)
+            && password.Any(char.IsDigit)
+            && password.Any(ch => !char.IsLetterOrDigit(ch));
     }
 }
